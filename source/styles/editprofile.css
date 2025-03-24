@@ -1,0 +1,77 @@
+:root{
+    --main-blue: #284cff; 
+    --main-background : #ffffff ;
+    --secondary-blue: #eff0f1 ; 
+    --font-black: #11181c;
+    --font-gray : #6e6d6d ;
+    --font-blue: #3e82e7 ;
+    --feilds-gray:#f8f8f7 ;
+}
+
+.main .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    height: calc(100vh - 150px);
+}
+
+
+.edit-card{
+    width: 100%;
+    max-width: 500px;
+}
+
+.edit-card h2{
+    padding-bottom: 20px;
+
+}
+.edit-card p{
+    font-weight: 500;
+    font-size: 19px;
+    padding: 10px 0;
+    color: var(--font-gray);
+}
+
+.edit-card input{
+    border: none;
+    background-color: var(--feilds-gray);
+    padding: 15px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.edit-card input:focus{
+    border: 1px solid var(--main-blue);
+    outline: none;
+}
+
+.edit-card .btns{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+.edit-card .btns .cancel{
+    background-color: var(--font-blue);
+}
+
+.card-message{
+    width: 100%;
+    max-width: 500px;
+    padding: 30px;
+    background-color: var(--secondary-blue);
+    border-radius: 9px;
+}
+
+.card-message p{
+    color: var(--font-gray);
+}
+
+input[type=text]{
+    padding: 60px 20px;
+}
+
+
+
