@@ -19,8 +19,7 @@
 
 body{
     background-color: var(--main-background);
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
     font-family: "Inter", sans-serif;
 }
 
@@ -32,44 +31,35 @@ body{
 
 
 
-/* container styling */
-
-@media (max-width: 375px) {
-    .container{
-        width: 95%;
-    }
-}
-
-@media (min-width: 1100px) {
-    .container{
-        width:1024px;
-    }
-}
-@media (min-width: 1440px) {
-    .container{
-        width:1300px;
-    }
-}
-
-@media (min-width: 1900px) {
-    .container{
-        width:1600px;
-    }
-}
-
 
 
 /* end of container styling */
+
+
+/* styling the logo  */
+
+.header .nav .logo{
+    text-decoration: none;
+    color: var(--main-blue);
+    font-size: 20px;
+    font-weight: 900;
+    
+}
 
 /* start of headr styling */
 
 .header{
     width: 100%;
-    padding: 10px 0;
+    padding: 10px ;
     text-align: center;
-    border-bottom: 0.5px solid var(--secondary-blue);
+ 
+    background-color: var(--main-background);
+    z-index: 100;
+    transition: 1  s;
 
-    
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 .header .nav{
@@ -87,22 +77,11 @@ body{
 }
 
 
-.header .nav .btns .btn{
-    background-color: var(--main-blue);
-    padding: 15px 25px;
-    color: var(--feilds-gray);
-    border-radius: 30px;
 
-   
-}
 
-.header .nav .btns .btn:hover{
-    box-shadow: 0 0 5px 10px inset var(--feilds-gray);
-    transform: scale(1.1);
-}
 
 .header .nav .btns .user-pfp{
-    border: 3px solid blueviolet;
+    border: 3px solid rgb(10, 140, 216);
 }
 
 .user-pfp{
@@ -118,19 +97,15 @@ body{
 
 .main{
     width: 100%;
-    padding: 30px 30px  0 30px;
+    padding: 110px 30px  0 30px;
 }
 
 .main .posts{
     margin: auto ;
     padding: 30px 0;
-    border-radius: 10px;
+    border-radius: 10px; 
     width: 90%;
-    height: calc(100vh - 170px);
-    overflow-y: scroll;
     gap: 60px;
-
-    scrollbar-width: none;
 }
 main .posts::-webkit-scrollbar{
     display: none;
@@ -147,30 +122,62 @@ main .posts::-webkit-scrollbar{
 }
 .main .posts .post:hover{
     transform: scale(1.01);
-    box-shadow: 0 0 5px 1px inset var(--font-gray);
+   
 
 }
+
+
+/* top */
 
 .main .posts .post .publisher {
     display: flex;
     align-items: center;
     gap: 20px;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
+  
+}
+
+
+.main .posts .post .publisher .txt{
+    display: flex;
+    flex-direction: column;
+}
+.main .posts .post .publisher p{
+    font-weight: 700;
+    padding: 0;
+    margin: 0;
+    font-size: 15px;
 }
 .main .posts .post .publisher img{
     width: 60px;
     height: 60px;
-    border-radius: 60px;
+    border-radius: 60%;
+
 
 }
 
 .main .posts .post .timing{
     color: var(--font-gray);
-    padding-bottom: 30px;
+    padding-bottom: 0px;
 }
+
+.main .posts .post .image{
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden;
+    border-radius: 10px; 
+    border: var(--main-background) 10px solid;
+}
+.main .posts .post .image img{
+    width: 100%;
+    border-radius: 10px;
+ 
+}
+
 
 .main .posts .post .info{
     width: 100%;
+    padding: 20px 0;
 }
 .main .posts .post .info h2{
     color: var(--font-black);
@@ -180,18 +187,9 @@ main .posts::-webkit-scrollbar{
 .main .posts .post .info p{
     color: var(--font-gray); 
     max-width: 900px;
-    padding: 10px 0 20px;
+    padding: 10px 0;
 }
 
-
-.main .posts .post .image{
-    width: 100%;
-
-}
-.main .posts .post .image img{
-    width: 100%;
-    border-radius: 10px;
-}
 
 .main .posts .post .comment-btn{
     background-color: var(--main-blue);
@@ -209,16 +207,16 @@ main .posts::-webkit-scrollbar{
     transform: scale(1.1);
 }
 
-button{
-    background-color: var(--main-blue);
-    padding: 15px 25px;
-    color: var(--feilds-gray);
- 
-    display: block;
-    text-align: center;
-    
-    margin: auto;
-    border: none;
-    width: 100%;
-    cursor: pointer;
+
+
+
+/* comments */
+.bottom{
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bottom p{
+    padding: 0;
+    margin: 0 ;
 }
