@@ -19,6 +19,57 @@
 </head>
 <body>
 
+    <!-- add post button -->
+    <div class="add-post" data-bs-toggle="modal" type="button" data-bs-target="#createPostModal">+</div> 
+    
+
+
+    <!-- post modal -->
+    <!-- The Modal -->
+    <div class="modal fade add post-modal" id="createPostModal" tabindex="-1" aria-labelledby="createPostModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createPostModalLabel">Create a New Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3 i1">
+                            <label for="postTitle" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="postTitle" placeholder="Enter title" required>
+                        </div>
+                        <div class="mb-3 i2">
+                            <label for="postContent" class="form-label">Content</label>
+                            <textarea class="form-control" id="postContent" rows="4" placeholder="Write your post here..." required></textarea>
+                        </div>
+                        <div class="mb-3 i3">
+                            <label for="postImage" class="form-label">Upload Picture</label>
+                            <input type="file" class="form-control" id="postImage" accept="image/*">
+                        </div>
+                        <div class="mb-3">
+
+                            <!-- select posts tags -->
+                            <div class="dropdown">
+                                <button onclick="toggleDropdown()" class="btn btn-primary">Select Options</button>
+                                <div id="options" class="dropdown-content">
+
+                                </div>
+                            </div>
+                            <div class="selected-items"></div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary submit-post" data-bs-dismiss="modal">Create Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!-- allert section -->
     <div id="alerts"></div>
 
@@ -28,8 +79,8 @@
                 <div class="nav-left">
                     <div class="logo">NRI-MEDIA</div>
                     <div class="nav-links">
-                        <button class="home-btn">Home</button>
-                        <button class="log-out" >Logout</button>
+                        <a class="home-btn btn">Home</a>
+                        <a class="log-out btn" >Logout</a>
                     </div>
                 </div>
                 

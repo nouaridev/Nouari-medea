@@ -1,5 +1,7 @@
 
 /* ==================== gloabal vars=====================*/
+ 
+
 
    
 /* ==================== end of gloabal vars=====================*/
@@ -62,14 +64,17 @@
             let setUserData = (data)=>{localStorage.setItem('userData' , JSON.stringify(data))}
             let getUserData = ()=>{return JSON.parse(localStorage.getItem('userData'))}
 
+        //home btn :
+            let  home = document.querySelector('.navbar .home-btn')    ;
+            if(home){
+                home.addEventListener('click' , ()=>{
+                    goToHome() ; 
+                })
+            }           
 
-        //logout 
-        
-            let lgbtn = document.querySelector('.nav-links .log-out') ; 
-            console.log(lgbtn)
-            lgbtn.addEventListener('click', (e)=>{
-                alert('hi' , 'warning')
-            })
+
+        //here making global auth :
+            axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
         
 
 
@@ -143,7 +148,7 @@
             
         
 
-
+            
 
 
 
@@ -152,7 +157,7 @@
 
 /* ===================End of the login page =====================*/
         }else if(window.location.href.includes('/signup.html')){
-/* ==================== Handlingthe dignup page =====================*/
+/* ==================== Handlingthe signup page =====================*/
 
 
 
@@ -240,8 +245,28 @@
 /* ==================== End of the signup page =====================*/
         }else if(window.location.href.includes('/home.html')){
 /* ==================== Handling the home  page =====================*/
+
+
+         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
             //removing the set of routing attributes : 
-            localStorage.removeItem('openedPost');
+            localStorage.removeItem('openedPost');// this attribute removed the id of the previews post that opened 
           
             //fill user info function 
                 let fillInfo = ()=>{
@@ -250,7 +275,17 @@
 
                     let navbar = document.querySelector('.navbar ');
                     navbar.innerHTML += `<img src=${info.progile_image} alt="Profile" class="profile-pic">`
-
+                    
+                    //log out : 
+                    let logOutBtn = document.querySelector('.log-out') ;
+                    logOutBtn.addEventListener('click' , ()=>{
+                        localStorage.removeItem('token') ;
+                        alert('good bye' , 'success') ; 
+                        setTimeout(()=>{
+                            goLogin() ;
+                        } , 2100)
+                    })
+                                    
 
                     let profileCard = document.querySelector('.sidebar .user-info');
                     profileCard.innerHTML = `
@@ -281,13 +316,14 @@
                 let fillPosts =async ()=>{
                     let posts = await getPosts();
                     let postContainer =document.querySelector('.main-content .posts') ; 
-                    console.log(posts)
+                   
                     posts.forEach((post)=>{
                         if((typeof post.image )!= "object" ){
-                            let tags = '';
+                            let tags = [];
                             post.tags.forEach((tag)=>{
-                                tags += `<li>4${tag.name}</li>`
+                                tags.push(`<li>4${tag.name}</li>`)
                             }) 
+                    
                             postContainer.innerHTML += `
                             <div class="post id=""p${post.id}" >
                                     <div class="post-header">
@@ -319,6 +355,8 @@
                         
                     })
 
+
+
                     //comment btn for each post : 
                     let cmntbtn = document.querySelectorAll(".post .comment-btn") ; 
                     cmntbtn.forEach((cm)=>{
@@ -330,6 +368,103 @@
                        
                 }
 
+
+
+
+            //fetching tags 
+
+                let getTags = ()=>{
+                    axios.get('https://tarmeezacademy.com/api/v1/tags').then((res)=>{
+                       let tags = res.data.data;
+                       console.log(tags) ; 
+                       let dropdown =  document.querySelector('.dropdown-content') ;
+                       tags.forEach((tag)=>{
+                            console.log(tag.name)
+                           dropdown.innerHTML += `
+                            <label><input type="checkbox" value="#${tag.name}">#${tag.name}</label>
+                           `
+                       })
+                        //fo now  i will put the add post drp down input 
+                        
+                            function toggleDropdown() {
+                                document.getElementById("options").classList.toggle("show");
+                            }
+                    
+                            window.onclick = function(event) {
+                                if (!event.target.matches('.dropdown button')) {
+                                    let dropdowns = document.getElementsByClassName("dropdown-content");
+                                    for (let i = 0; i < dropdowns.length; i++) {
+                                        let openDropdown = dropdowns[i];
+                                        if (openDropdown.classList.contains('show')) {
+                                            openDropdown.classList.remove('show');
+                                        }
+                                    }
+                                }
+                            }
+                    
+                            document.querySelectorAll('.dropdown-content input[type="checkbox"]').forEach(checkbox => {
+                            checkbox.addEventListener('change', function() {
+                                const text = this.value;
+                                const selectedItems = document.querySelector('.selected-items');
+                                const existingItem = selectedItems.querySelector(`[data-value="${text}"]`);
+                
+                                if (this.checked) {
+                                    if (!existingItem) {
+                                        const selectedItem = document.createElement('div');
+                                        selectedItem.className = 'selected-item'
+                                        selectedItem.setAttribute('data-value', text);
+                                        selectedItem.innerText = text;
+                                        selectedItems.appendChild(selectedItem);
+                                    }
+                                } else {
+                                    if (existingItem) {
+                                        existingItem.remove();
+                                    }
+                                }
+                        });
+                    }
+                            );
+
+            
+                    })
+                }
+            
+            //add post function : 
+                let sendPost = async()=>{
+                
+                        let postTitle= document.querySelector('.post-modal .modal-body .i1 input').value;
+                        let postBody = document.querySelector('.post-modal .modal-body .i2 textarea').value;
+                        let postImage = document.querySelector('.post-modal .modal-body .i3 input').files[0];
+                        let formData = new FormData( ); 
+
+                        formData.append("title", postTitle) ;
+                        formData.append("body", postBody) ;
+                        formData.append("image", postImage)    
+                    
+                        let url = 'https://tarmeezacademy.com/api/v1/posts' ; 
+                        try{
+                            let res = await axios.post(url , formData);
+                        
+                            if(res.status >= 200 || res.status <= 299){
+                                alert('post added' , 'success')
+                                setTimeout(()=>{
+                                    window.location.reload() ;
+                                }, 2000)
+                          
+                            }else{
+                                alert('somthing went wrong' , 'warning');   
+                            }
+                           
+                        }catch(e){
+                            alert('somthing went wrong' , 'warning');  
+                        }
+                        
+                }
+
+                
+
+
+                // <=========================call functions =======================================>
             //cheking the log in :
                 if(!isLogedIn()){
                     alert('try to login bro' , 'danger');
@@ -345,14 +480,38 @@
                     //filling user info 
                     fillInfo()
 
+
                     //filling the posts 
                     fillPosts() 
+
+
+
+                      // add post tags  
+                        
+                     getTags() ; 
+                 
+
+
+                    
+                     //for now we will use the add post funcion
+                        let submitbtn = document.querySelector('.modal .submit-post');
+                        submitbtn.addEventListener('click' ,()=>{          
+                                 sendPost()
+                          
+                        }) ;
+
+                  
                 }
-            
             
 
 
         }
+
+
+
+
+
+
         
 /* ==================== end of the home  page =====================*/
             
