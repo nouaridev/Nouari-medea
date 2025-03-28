@@ -3,7 +3,7 @@
 /* container styling  */
 .container {
     width: 90%;       
-    max-width: 1200px; 
+    max-width: 1500px; 
     margin: 0 auto;    
     padding: 20px;     
 }
@@ -72,7 +72,7 @@ body{
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     transition: 0.3s;
-    z-index: 1;
+    z-index: 2;
 }
 
 /* قسم اليسار في النافبار (الشعار + الروابط) */
@@ -90,7 +90,7 @@ body{
 }
 
 /* الأزرار */
-.nav-links button {
+.nav-links .btn {
     background: rgba(0, 168, 255, 0.3);
     border: none;
     padding: 10px 18px;
@@ -168,7 +168,6 @@ body{
 .wrapper {
     display: flex;
     gap: 20px;
-    max-width: 1200px;
     width: 100%;
     justify-content: space-between;
 }
@@ -214,6 +213,7 @@ body{
     color: white;
     text-align: center;
     transition: 0.3s ease-in-out;
+    z-index: 3;
 }
 
 /* صورة المستخدم */
@@ -395,7 +395,7 @@ body{
 
 .posts {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
 }
 
@@ -420,10 +420,25 @@ body{
     padding: 15px;
     height: fit-content;
     align-self: center;
+
+   
+    background: #161b22;  /* Dark but not too black */
+    color: #e3e8f0; /* Light gray text for readability */
+    border: 1px solid #2d3748; /* Soft border for structure */
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    transition: all 0.3s ease-in-out;
+    z-index: 1;
+    
 }
 
 .post:hover {
     transform: scale(1.03);
+    background: #1f2937;  /* Slightly lighter on hover */
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+   
 }
 
 /* رأس المنشور */
@@ -444,7 +459,10 @@ body{
 .post-user-info h4 {
     margin: 0;
     font-size: 16px;
-    color: #333;
+
+    color: #38bdf8;  /* Light blue for visibility */
+    font-weight: bold;
+
 }
 
 .post-time {
@@ -469,13 +487,20 @@ body{
 .post-content h3 {
     font-size: 18px;
     margin: 0 0 5px;
-    color: #222;
+    
+
+    color: #facc15;  /* Soft yellow for better contrast */
+    font-size: 1.2rem;
+    font-weight: 600;
 }
 
 .post-content p {
     font-size: 14px;
     color: #666;
     margin: 0;
+
+    color: #e3e8f0;  /* Light gray for easy readability */
+    font-size: 1rem
 }
 
 /* أزرار التفاعل */
@@ -492,10 +517,18 @@ body{
     cursor: pointer;
     color: #555;
     transition: color 0.3s ease;
+
+    background: #16a34a;  /* Green for action buttons */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background 0.3s;
+
 }
 
 .post-actions button:hover {
-    color: #ff6600;
+    background: #15803d
 }
 
 
@@ -513,10 +546,12 @@ body{
     right: 0;
     width: 100%;
     background: transparent; /* Semi-transparent background */
-    z-index: 10;
+   
     backdrop-filter: blur(10px); /* Optional: Add blur effect */
     border-radius: 20px;
+    z-index: 3;
 }
+
 
 .sidebar {
     position: sticky;
@@ -586,7 +621,46 @@ align-items: center;
 
 
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
 
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 120px;
+    overflow-y: auto;
+    max-height: 100px;
+    border: 1px solid #ddd;
+    z-index: 1;
+}
+
+.dropdown-content label {
+    display: block;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.dropdown-content label:hover {
+    background-color: #ddd;
+}
+
+.show {
+    display: block;
+}
+
+.selected-items {
+      width:100px;
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+.selected-items div {
+    margin-bottom: 5px;
+}
 
 /* handiling the alerts contianer */
 #alerts{
@@ -598,9 +672,181 @@ align-items: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: -99;
+    z-index: -3;
     opacity: 0;
     transition: 0.3s;
     background-color: #04031fd0;
     font-size: 20px;
 }
+
+
+
+
+
+
+
+
+
+/* post adder */
+ .add-post{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: #00a8ff;
+    position: fixed;
+    right: 10px;
+   bottom: -20px;
+   transform: translateY(-50%);
+    font-size: 40px;
+    cursor: pointer;
+ }
+ .add-post:hover , .add-post:active{
+    background-color: #0066aa;
+ }
+
+ 
+
+
+ /* option selection in posts adder */
+
+ .dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    border-radius: 9px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 200px;
+    width: 100%;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    z-index: 1;
+    border-radius: 9px;
+}
+
+.dropdown-content label {
+    display: block;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.dropdown-content label:hover {
+    background-color: #ddd;
+}
+
+.show {
+    display: block;
+}
+
+.selected-items {
+    width: 100%;
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    border-radius: 9px;
+}
+
+.selected-items div {
+    background-color: #0080cc;
+    border-radius: 2px;
+    width: 90%;
+    color: white;
+    padding: 5px 10px;
+}
+
+.modal {
+    height: 100vh;
+    background-color:#0e1113d6 ;
+}
+.modal-dialog{
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    height: 100%;
+}
+
+.modal-dialog .modal-content{
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+
+/* Modal Background */
+.modal-content {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white; /* Ensures readability */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal Header */
+.modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Modal Title */
+.modal-title {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Input Fields */
+.modal-body input,
+.modal-body textarea {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Placeholder Text Color */
+.modal-body input::placeholder,
+.modal-body textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.modal-body .dropdown-content{
+    color: #131722;
+}
+
+/* File Upload Styling */
+.modal-body input[type="file"] {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px;
+    border-radius: 5px;
+    color: white;
+}
+
+/* Modal Buttons */
+.modal-footer .btn-primary {
+    background: #ff9800; /* Accent color */
+    border: none;
+}
+
+.modal-footer .btn-primary:hover {
+    background: #e68900;
+}
+
+.modal-footer .btn-secondary {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+}
+
+.modal-footer .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
