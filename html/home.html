@@ -13,6 +13,9 @@
     <!-- Axios -->
     <script src="../node_modules/axios/dist/axios.min.js"></script>
 
+       <!-- font awesome  -->
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+     
   
     <link rel="stylesheet" href="./../css/main.css">
 
@@ -20,7 +23,7 @@
 <body>
 
     <!-- add post button -->
-    <div class="add-post" data-bs-toggle="modal" type="button" data-bs-target="#createPostModal">+</div> 
+    <div class="add-post" data-bs-toggle="modal" type="button" data-bs-target="#createPostModal"><i class="fa-solid fa-square-plus"></i></div> 
     
 
 
@@ -77,18 +80,21 @@
         <div class="container navbar-container " >
             <nav class="navbar">
                 <div class="nav-left">
-                    <div class="logo">NRI-MEDIA</div>
-                    <div class="nav-links">
-                        <a class="home-btn btn">Home</a>
-                        <a class="log-out btn" >Logout</a>
-                    </div>
+                    <div class="logo">NRI-<i class="fa-solid fa-dragon"></i></div>
                 </div>
-                
+                <div class="analystics">
+                    <div class="nbrusers"><span> 899  </span><i class="fa-solid fa-users"></i></div>
+                    <div class="nbrposts">14303 <i class="fa-solid fa-clipboard"></i></div>
+                </div>
+                <div class="nav-links">
+                    <a class="home-btn btn"><i class="fa-solid fa-house"></i></a>
+                    <a class="log-out btn" ><i class="fa-solid fa-right-from-bracket"></i></a>
+                </div>
             </nav>
         </div>
      
+    
         
-
 
 <!-- the main content  -->
  
@@ -104,13 +110,11 @@
     
         <nav class="sidebar-menu">
             <ul>
-                <li><a href="#">📋 My Posts</a></li>
-              
-               
+                <li><a href="#"><i class="fa-regular fa-copy"></i> My Posts</a></li>
             </ul>
-        </nav>
+    
         <aside class="right-sidebar">
-            <h3>Tags</h3>
+            <h3><i class="fa-solid fa-tags"></i></h3>
             <ul>
                
             </ul>
@@ -119,7 +123,7 @@
     
 
     <!-- main content -->
-    <main class="main-content">
+    <main class="main-content" >
         <h2 style="color: white;">Latest Posts</h2>
         <div class="posts">
             
