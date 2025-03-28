@@ -77,7 +77,17 @@
             axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
         
 
-
+        //log out : 
+               let logOutBtn = document.querySelector('.log-out') ;
+                if(logOutBtn){
+                    logOutBtn.addEventListener('click' , ()=>{
+                        localStorage.removeItem('token') ;
+                        alert('<i class="fa-regular fa-hand-peace"></i> good bye bro!' , 'success') ; 
+                        setTimeout(()=>{
+                            goLogin() ;
+                        } , 2100)
+                    })
+                }
 
 
 
@@ -139,7 +149,7 @@
                                
                             },2300)
 
-                            alert('done!' , 'success');
+                            alert('<i class="fa-solid fa-dove"></i> done!' , 'success');
 
                         } catch (error) {
                             alert('something wrong' , 'warning');
@@ -230,7 +240,7 @@
                         }
                     },2300)
 
-                    alert('done! you joined the community' , 'success');
+                    alert('done! you joined the community <br><i class="fa-regular fa-address-card"></i>' , 'success');
                 } catch (error) {
                     alert('contact ismail nouari for help' , 'warning')
                 }
@@ -273,33 +283,25 @@
                     let info = getUserData() ; 
                     
 
-                    let navbar = document.querySelector('.navbar ');
-                    navbar.innerHTML += `<img src=${info.progile_image} alt="Profile" class="profile-pic">`
+                    // let navbar = document.querySelector('.navbar ');
+                    // navbar.innerHTML += `<img src=${info.progile_image} alt="Profile" class="profile-pic">`
                     
-                    //log out : 
-                    let logOutBtn = document.querySelector('.log-out') ;
-                    logOutBtn.addEventListener('click' , ()=>{
-                        localStorage.removeItem('token') ;
-                        alert('good bye' , 'success') ; 
-                        setTimeout(()=>{
-                            goLogin() ;
-                        } , 2100)
-                    })
+                 
                                     
 
                     let profileCard = document.querySelector('.sidebar .user-info');
                     profileCard.innerHTML = `
-                        <img src=${info.progile_image} alt="Profile Picture">
+                        <img src=${info.profile_image} alt="Profile Picture">
                         <h3 class="logged-user-name">${info.name}</h3>
                         <p>Posts: <span>${info.posts_count}</span></p>
-                        <button class="edit-profile">Edit Profile</button>
+                        <button class="edit-profile"><i class="fa-solid fa-user-pen"></i></button>
                     `
 
                     let tags = document.querySelector('.right-sidebar ul') ;
                     let url = 'https://tarmeezacademy.com/api/v1/tags';
                     axios.get(url).then((e)=>{
                         e.data.data.forEach(tag=> {
-                            tags.innerHTML+= `<li>#${tag.name}</li>`
+                            tags.innerHTML+= `<li><i class="fa-solid fa-hashtag"></i> ${tag.name}</li>`
                         });
                     })
                 }
@@ -330,7 +332,7 @@
                                         <img src=${post.author.profile_image} alt="User" class="post-user-pic">
                                         <div class="post-user-info">
                                             <h4>${post.author.name}</h4>
-                                            <p class="post-time">${post.created_at}</p>
+                                            <p class="post-time"><i class="fa-solid fa-user-clock"></i> ${post.created_at}</p>
                                         </div>
                                     </div>
     
@@ -344,32 +346,32 @@
                                         ${tags}
                                     </ul>
                                     <div class="post-actions" >
-                                        <button class="comment-btn" data='${post.id}'>💬 ${post.comments_count} Comment</button>
-                                        <button class="share-btn">🔗 Share</button>
+                                        <button class="comment-btn" data='${post.id}' > <i class="fa-solid fa-comment-nodes"></i>  ${post.comments_count}</button>
+                                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
                                     </div>
                                 
                                </div>
                             `
+
+                          
                         }
 
                         
                     })
 
-
+                
 
                     //comment btn for each post : 
                     let cmntbtn = document.querySelectorAll(".post .comment-btn") ; 
                     cmntbtn.forEach((cm)=>{
                         cm.addEventListener('click' , (e)=>{
-                            localStorage.setItem('openedPost' , e.target.getAttribute('data') )
+                            // localStorage.setItem('openedPost' , e.target.getAttribute('data') )
+                            window.location.href = `/html/post.html?id=${e.target.getAttribute('data') }`
                         })
                     })
                     
                        
                 }
-
-
-
 
             //fetching tags 
 
@@ -461,19 +463,18 @@
                         
                 }
 
-                
+        
 
-
-                // <=========================call functions =======================================>
+            // <=========================call functions =======================================>
             //cheking the log in :
                 if(!isLogedIn()){
-                    alert('try to login bro' , 'danger');
+                    alert('<i class="fa-solid fa-hand-point-up"></i> try to login bro ! ' , 'danger');
                     setTimeout(()=>{
                         goLogin();
                     } , 2100)
                 }else{
                     if(localStorage.getItem('logeinnow')){
-                        alert('welcome home!' , 'success') ; 
+                        alert('<i class="fa-regular fa-face-smile-wink"></i> welcome home!' , 'success') ; 
                         localStorage.removeItem('logeinnow')
                     }
 
@@ -486,13 +487,10 @@
 
 
 
-                      // add post tags  
-                        
+                    // add post tags  
                      getTags() ; 
                  
 
-
-                    
                      //for now we will use the add post funcion
                         let submitbtn = document.querySelector('.modal .submit-post');
                         submitbtn.addEventListener('click' ,()=>{          
@@ -505,7 +503,17 @@
             
 
 
-        }
+   
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -514,5 +522,126 @@
 
         
 /* ==================== end of the home  page =====================*/
-            
-           
+}else if(window.location.href.includes('/post.html')){
+/* ==================== start of post page =====================*/
+
+
+         //add comment function : 
+            let addComment = (id )=>{
+                let url = `https://tarmeezacademy.com/api/v1/posts/${id}/comments`;
+                let bd =     document.getElementById("commentInput").value;
+                axios.post(url , {body: bd}).then((res)=>{
+                    let cm = res.data.data ; 
+                    alert('comment added <i class="fa-regular fa-face-smile-beam"></i>' , 'success');
+                    setTimeout(() => {
+                        window.location.reload(); 
+                    }, 2100);
+                })
+                
+            }
+
+
+        //get post info function : 
+            let getPost = async(id)=>{
+                let url = `https://tarmeezacademy.com/api/v1/posts/${id}`;
+                let  res = await axios.get(url) ; 
+                res = res.data.data  ;
+                fillInfo(res ,id) ; 
+            }
+
+        //filling comments fucntion :
+            let fillComments = (post)=>{
+                let commentsCard = document.querySelector('.post-body .comments-section');
+                if(post.comments){
+                    post.comments.forEach((cm)=>{
+                        commentsCard.innerHTML += `
+                            <!-- comment -->
+                            <div class="comment">
+                                <img src="${cm.author.profile_image}" alt="">
+                                <div class="info">
+                                    <h4>${cm.author.name}</h4>
+                                    <p>${cm.body}</p>
+                                </div>
+                            </div>
+                        `
+                    })
+                }
+            }
+        //fill the informaions of the post :
+            let fillInfo = (post , id)=>{
+                let postCard = document.querySelector('.post-body .post-container') ;
+                postCard.innerHTML = `
+                    <div class="author ">
+                        <img src='${post.author.profile_image}' alt="User" class="post-user-pic">
+                        <div class="post-user-info">
+                            <h4>${post.author.name}</h4>
+                            <p class="post-time"><i class="fa-solid fa-user-clock"></i> ${post.created_at}</p>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <h5>${post.title}</h5>
+                        <img src="${post.image}" alt="Random Post Image" class="img-fluid rounded">
+
+                    </div>
+                    <p class="text-light">${post.body}</p>
+                    <!-- Add Comment Section (Standalone) -->
+                    <div class=" mt-4">
+                        <div class="add-comment-card card p-3">
+                            <h5 class="text-info">Add a Comment</h5>
+                            <input type="text" class="form-control mb-2" placeholder="Write a comment..." autofocus id="commentInput">
+                            <button class="btn btn-primary" id="commentButton" ><i class="fa-regular fa-face-smile-beam"></i> Post Comment</button>
+                        </div>
+                    </div>
+                `
+
+            //adding commnent : 
+                document.getElementById('commentButton').addEventListener('click' , ()=>{
+                    addComment(id) ; 
+                })
+
+            //fill comments :
+                fillComments(post)
+              
+            }
+        //first checks if the user already loged in :
+        if(!isLogedIn()){
+            alert('try to login bro' , 'danger');
+            setTimeout(()=>{
+                goLogin();
+            } , 2100)
+        }else{
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get("id"); // Get the value of "id"
+            console.log(id);
+
+
+            //get post info 
+            getPost(id) ;
+
+        
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /* ==================== end of post page =====================*/
+}
+
