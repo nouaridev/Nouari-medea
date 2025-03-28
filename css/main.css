@@ -1,0 +1,606 @@
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+/* container styling  */
+.container {
+    width: 90%;       
+    max-width: 1200px; 
+    margin: 0 auto;    
+    padding: 20px;     
+}
+
+/* 📌 تحسين العرض للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;   /* زيادة العرض قليلاً للشاشات الصغيرة */
+        padding: 15px;
+    }
+}
+
+/* 📌 تحسين العرض للهواتف الصغيرة جدًا */
+@media (max-width: 480px) {
+    .container {
+        width: 100%;  /* استغلال كامل العرض */
+        padding: 10px;
+    }
+}
+
+
+
+
+
+
+
+/* body styling */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box !important;
+  
+}
+
+body{
+    background-color: rgba(10, 25, 47, 0.9);
+    background-color: #131722;
+    width: 100%;
+    position: relative;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* navbar */
+/* تحسين الـ Navbar */
+.navbar {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #1a1a2e, #16213e); /* نفس ألوان الـ Sidebar */
+    padding: 15px 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: 0.3s;
+    z-index: 1;
+}
+
+/* قسم اليسار في النافبار (الشعار + الروابط) */
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+/* الشعار */
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #00a8ff;
+    margin-right: 20px;
+}
+
+/* الأزرار */
+.nav-links button {
+    background: rgba(0, 168, 255, 0.3);
+    border: none;
+    padding: 10px 18px;
+    margin: 0 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.nav-links button:hover {
+    background: rgba(0, 168, 255, 0.6);
+}
+
+/* صورة الملف الشخصي */
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid #00a8ff;
+    transition: 0.3s;
+}
+
+.profile-pic:hover {
+    transform: scale(1.1);
+}
+
+/* تحسين التجاوب */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .nav-left .logo{margin: 0;}
+
+
+    .nav-left {
+        flex-direction: column;
+      
+    }
+    .nav-links{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .nav-links button {
+        display: block;
+        margin: 5px 0;
+       
+    }
+
+    .profile-pic {
+        margin-top: 10px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* main */
+/* تحسين الـ Wrapper ليكون داخل الـ Container */
+.wrapper {
+    display: flex;
+    gap: 20px;
+    max-width: 1200px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+/* تحسين التجاوب */
+@media (max-width: 1024px) {
+    .wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sidebar,
+    .right-sidebar {
+        width: 100%;
+        text-align: center;
+    }
+
+    .posts {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .post {
+        width: 100%;
+    }
+}
+
+
+
+
+
+
+
+
+/* تحسين الـ Sidebar */
+.sidebar {
+    width: 250px;
+    background: rgba(26, 26, 46, 0.9); /* تأثير زجاجي */
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    color: white;
+    text-align: center;
+    transition: 0.3s ease-in-out;
+}
+
+/* صورة المستخدم */
+.user-info img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 4px solid #00a8ff;
+    transition: transform 0.3s ease-in-out;
+}
+
+.user-info img:hover {
+    transform: scale(1.1);
+}
+
+/* اسم المستخدم */
+.user-info h3 {
+    margin-top: 10px;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+/* عدد المنشورات */
+.user-info p {
+    font-size: 0.9rem;
+    color: #ddd;
+}
+
+/* زر تعديل الملف الشخصي */
+.edit-profile {
+    background: linear-gradient(135deg, #00a8ff, #0080cc);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+    margin-top: 15px;
+    width: 100%;
+    display: inline-block;
+}
+
+.edit-profile:hover {
+    background: linear-gradient(135deg, #0080cc, #0066aa);
+    transform: scale(1.05);
+}
+
+/* تحسين قائمة التنقل الجانبية */
+.sidebar-menu ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.sidebar-menu li {
+    margin: 10px 0;
+}
+
+.sidebar-menu a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    padding: 12px;
+    border-radius: 8px;
+    transition: 0.3s ease-in-out;
+    font-weight: 500;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.sidebar-menu a:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+/* تحسين التجاوب */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* تحسين الـ Right Sidebar */
+.right-sidebar {
+    width: 100%;
+    background: rgba(26, 26, 46, 0.9); /* تأثير زجاجي */
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    color: white;
+    text-align: center;
+    transition: 0.3s ease-in-out;
+}
+
+/* العنوان */
+.right-sidebar h3 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* قائمة التصنيفات */
+.right-sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.right-sidebar li {
+    
+    margin: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+/* تأثير عند تمرير الماوس */
+.right-sidebar li:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+/* تحسين التجاوب مع الشاشات الصغيرة */
+@media (max-width: 1024px) {
+    .right-sidebar {
+        width: 100%;
+        text-align: center;
+        margin-top: 20px;
+    }
+}
+
+
+
+
+
+
+/* main content */
+.main-content {
+    flex: 1;
+    padding: 20px;
+  
+}
+
+.main-content h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* th post */
+/* تصميم المنشور */
+.post {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    padding: 15px;
+    height: fit-content;
+    align-self: center;
+}
+
+.post:hover {
+    transform: scale(1.03);
+}
+
+/* رأس المنشور */
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.post-user-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.post-user-info h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.post-time {
+    margin: 0;
+    font-size: 12px;
+    color: #777;
+}
+
+/* صورة المنشور */
+.post-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* محتوى المنشور */
+.post-content {
+    padding: 10px 0;
+}
+
+.post-content h3 {
+    font-size: 18px;
+    margin: 0 0 5px;
+    color: #222;
+}
+
+.post-content p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+/* أزرار التفاعل */
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.post-actions button {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+.post-actions button:hover {
+    color: #ff6600;
+}
+
+
+
+
+
+
+/* dealing with scrolling */
+
+.navbar-container {
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    right: 0;
+    width: 100%;
+    background: transparent; /* Semi-transparent background */
+    z-index: 10;
+    backdrop-filter: blur(10px); /* Optional: Add blur effect */
+    border-radius: 20px;
+}
+
+.sidebar {
+    position: sticky;
+    top: 150px;  /* Adjust so it stays below the navbar */
+    height: calc(100vh - 160px);  /* Ensure it takes full height minus navbar */
+    overflow-y: auto;  /* Allow scrolling inside the sidebar if needed */
+}
+
+.wrapper {
+    
+    display: flex;
+    align-items: flex-start;
+    gap: 20px; /* Adds spacing between sections */
+}
+
+
+
+@media (max-width: 1024px) {
+    .wrapper{
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 0;
+    }
+    .sidebar , .right-sidebar{
+        position: initial;
+        height: fit-content;
+    }
+    .main-content{
+        margin: 0;
+    }
+    body{
+        height: 100% !important;
+    }
+}
+
+
+
+
+
+
+/* alerts parsts */
+
+
+.alert{
+justify-content: space-between;
+max-width: 500px;
+padding: 5px 10px;
+align-items: center;
+}
+.alert button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.alert button:active{
+    border: none;
+    outline: none;
+}
+
+.alert button:active{
+    border: none;
+    outline: none;
+}
+
+
+
+
+
+
+/* handiling the alerts contianer */
+#alerts{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -99;
+    opacity: 0;
+    transition: 0.3s;
+    background-color: #04031fd0;
+    font-size: 20px;
+}

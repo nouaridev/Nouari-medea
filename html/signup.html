@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+      <!-- linking bootstrap and axios -->
+    <!-- Bootstrap -->
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Axios -->
+    <script src="../node_modules/axios/dist/axios.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #131722; /* Dark background */
+            color: #ffffff; /* White text */
+        }
+
+        .signup-container {
+            width: 350px;
+            padding: 20px;
+            background: #1b1f2b; /* Dark card background */
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #00aaff; /* Highlighted title color */
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            font-size: 14px;
+            color: #ddd;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #222838; /* Input background */
+            color: #ffffff;
+        }
+
+        input::placeholder {
+            color: #aaa;
+        }
+
+        .signup-btn {
+            width: 100%;
+            padding: 10px;
+            background: #007bff; /* Primary button color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .signup-btn:hover {
+            background: #0056b3;
+        }
+
+        .login-link {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #00aaff;
+            text-decoration: none;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+
+        #alerts{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+            z-index: -9;
+            opacity: 0;
+            transition: 0.3s;
+            background-color: #04031fd0;
+        }
+    </style>
+</head>
+<body>
+    <div id="alerts"></div>
+    <div class="signup-container">
+        <h2>Sign Up</h2> 
+
+        <form>
+            <div class="input-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="fullName" placeholder="Enter your full name" required>
+            </div>
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="userName" placeholder="Choose a username" required>
+            </div>
+            <div class="input-group">
+                <label for="emal">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Create a password" required>
+            </div>
+            <div class="input-group">
+                <label for="image">Profile Picture</label>
+                <input type="file" id="image" accept="image/*" required>
+            </div>
+            <button type="submit" class="signup-btn" id="signup-btn">Sign Up</button>
+            <a href="login.html" class="login-link">Already have an account? Login</a>
+        </form>
+    </div>
+
+    <script src="/html/main.js"></script>
+</body>
+</html>
