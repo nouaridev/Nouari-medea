@@ -307,75 +307,120 @@
                     })
                 }
 
-            //getposts function : 
-                let getPosts = async (page)=>{
-                    let url= `https://tarmeezacademy.com/api/v1/posts?limit=10&page=${page}`;
-                    let response= await axios.get(url); 
-                    
-                    return response.data.data
-                }
 
-            //fillingposts :
-                let fillPosts =async (page)=>{
-                    let posts = await getPosts(page);
-                    let postContainer =document.querySelector('.main-content .posts') ; 
-                   
-                    posts.forEach((post)=>{
-                        if((typeof post.image )!= "object" ){
-                            let tags = [];
-                            post.tags.forEach((tag)=>{
-                                tags.push(`<li>4${tag.name}</li>`)
-                            }) 
-                    
-                            postContainer.innerHTML += `
-                            <div class="post id=""p${post.id}" >
-                                    <div class="post-header">
-                                        <img src=${post.author.profile_image} alt="User" class="post-user-pic">
-                                        <div class="post-user-info">
-                                            <h4>${post.author.name}</h4>
-                                            <p class="post-time"><i class="fa-solid fa-user-clock"></i> ${post.created_at}</p>
+
+            //variable for debounce the fetching (باش ميصراوش طلبات فنفس الوقت)
+ 
+                    //Set isFetching globally to avoid too many requests at once
+                        localStorage.setItem('isfetching', false);   
+
+
+                        //  getPosts async
+                        const getPosts = async (page) => {
+                            let url = `https://tarmeezacademy.com/api/v1/posts?limit=6&page=${page}`;
+
+                            if (localStorage.getItem('isfetching') === 'false') {
+                                localStorage.setItem('isfetching', true);
+
+                                try {
+                                    let res = await axios.get(url);
+                                    localStorage.setItem('isfetching', false);
+                                    return res.data.data; // ✅ Correctly return posts
+                                } catch (error) {
+                                    console.error("Error fetching posts:", error);
+                                    localStorage.setItem('isfetching', false);
+                                    return []; // ✅ Return empty array if error occurs
+                                }
+                            }
+                        };
+
+                        // Setup IntersectionObserver for Infinite Scroll
+                        let lazyLoad = new IntersectionObserver(entries => {
+                            if (entries[0].isIntersecting) {
+                                console.log('infinite element detected')
+                                fillPosts(localStorage.getItem('page')); 
+                                console.log('end opiraton after detect')
+                            }
+                        }, { threshold: 0.7 });
+
+
+
+
+
+                        // Fill posts 
+                        const fillPosts = async (page) => {
+                            let posts = await getPosts(page); // Wait for posts to be fetched
+
+                            let postContainer = document.querySelector('.main-content .posts'); 
+                            if (!posts || posts.length === 0) return; 
+
+                            posts.forEach((post , index) => {
+                                if (typeof post.image !== "object") {
+                                    let tags = post.tags.map(tag => `<li>${tag.name}</li>`).join("");
+
+                                    const postElement = document.createElement("div");
+                                    postElement.classList.add("post");
+                                    postElement.id = `p${post.id}`;
+                                    postElement.innerHTML = `
+                                        <div class="post-header">
+                                            <img src="${post.author.profile_image}" alt="User" class="post-user-pic">
+                                            <div class="post-user-info">
+                                                <h4>${post.author.name}</h4>
+                                                <p class="post-time"><i class="fa-solid fa-user-clock"></i> ${post.created_at}</p>
+                                            </div>
                                         </div>
-                                    </div>
-    
-                                    <img src="${post.image}" alt="Post Image" class="post-image">
-    
-                                    <div class="post-content">
-                                        <h3>${post.title}</h3>
-                                        <p>${post.body}</p>
-                                    </div>
-                                    <ul class="post-tags">
-                                        ${tags}
-                                    </ul>
-                                    <div class="post-actions" >
-                                        <button class="comment-btn" data='${post.id}' > <i class="fa-solid fa-comment-nodes"></i>  ${post.comments_count}</button>
-                                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
-                                    </div>
-                                
-                               </div>
-                            `
+                                        <img src="${post.image}" alt="Post Image" class="post-image">
+                                        <div class="post-content">
+                                            <h3>${post.title}</h3>
+                                            <p>${post.body}</p>
+                                        </div>
+                                        <ul class="post-tags">${tags}</ul>
+                                        <div class="post-actions">
+                                            <button class="comment-btn" data-id="${post.id}"> 
+                                                <i class="fa-solid fa-comment-nodes"></i> ${post.comments_count}
+                                            </button>
+                                            <button class="share-btn"><i class="fa-solid fa-share"></i></button>
+                                        </div>
+                                    `;
 
-                          
-                        }
+                                    // hidden for animation
+                                    postElement.style.opacity = "0";
+                                    postElement.style.transform = "translateY(10px)";
+                                    postElement.style.transition = "opacity 0.5s ease, transform 0.5s ease";
 
-                        
-                    })
+                                    // Append each post with a delay (stagger effect)
+                                    setTimeout(() => {
+                                        postContainer.appendChild(postElement);
+                                        setTimeout(() => {
+                                            postElement.style.opacity = "1";
+                                            postElement.style.transform = "translateY(0)";
+                                        }, 100); // Small delay for animation
+                                    }, index * 500); // Each post appears 500ms after the previous one
+                                }
+                            });
 
-                
+                            //  Add click event for comments
+                            document.querySelectorAll(".post .comment-btn").forEach(btn => {
+                                btn.addEventListener('click', (e) => {
+                                    let postId = e.target.closest(".comment-btn").getAttribute('data-id');
+                                    if (postId) {
+                                        window.location.href = `/html/post.html?id=${postId}`;
+                                    }
+                                });
+                            });
 
-                    //comment btn for each post : 
-                    let cmntbtn = document.querySelectorAll(".post .comment-btn") ; 
-                    cmntbtn.forEach((cm)=>{
-                        cm.addEventListener('click' , (e)=>{
-                            // localStorage.setItem('openedPost' , e.target.getAttribute('data') )
-                            window.location.href = `/html/post.html?id=${e.target.getAttribute('data') }`
-                        })
-                    })
-                    
+                            // Increase page number for next request
+                            localStorage.setItem('page', parseInt(localStorage.getItem('page')) + 1);
 
-                    //increment the page : 
-                    localStorage.setItem('page' , localStorage.getItem('page')+ 1 ) ; 
-                       
-                }
+                            //  Observe the infinite scroll trigger
+                            setTimeout(()=>{
+                                lazyLoad.unobserve(document.querySelector('.infinite-scroll'));
+                                lazyLoad.observe(document.querySelector('.infinite-scroll'));
+                            }, 1000)
+                        };
+
+                            
+
 
             //fetching tags 
 
@@ -486,18 +531,10 @@
                     fillInfo()
 
 
-                    //for now we will impelent the infinite scroling : 
-                            let lazyLoad = new 
-                            IntersectionObserver(final=>{
-                                if(final[0].isIntersecting){
-                                        //filling the posts 
-                                        fillPosts(localStorage.getItem('page'))  ; 
-                                }
-                            })
-                            
+             
                       // now defining the element that indicates the end;: 
                     //filling the posts 
-                    lazyLoad.observe(document.querySelector('.infinite-scroll') )
+                    fillPosts(localStorage.getItem('page'))
                     
                     // add post tags  
                      getTags() ; 
@@ -531,9 +568,7 @@
 
 
 
-
-
-        
+            
 /* ==================== end of the home  page =====================*/
 }else if(window.location.href.includes('/post.html')){
 /* ==================== start of post page =====================*/

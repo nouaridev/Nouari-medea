@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Awesome Icons Preview</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #141829;
+            color: white;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #29b6f6;
+        }
+        
+        .subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+        
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .icon-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .icon-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .icon-card {
+            background-color: #1e293b;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s, background-color 0.2s;
+            cursor: pointer;
+        }
+        
+        .icon-card:hover {
+            transform: translateY(-5px);
+            background-color: #2c3e50;
+        }
+        
+        .icon-display {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #29b6f6;
+        }
+        
+        .icon-name {
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .category-title {
+            font-size: 1.5rem;
+            margin: 40px 0 20px;
+            color: #29b6f6;
+            border-bottom: 1px solid #29b6f6;
+            padding-bottom: 10px;
+        }
+        
+        .copy-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #29b6f6;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Font Awesome Icons Preview</h1>
+        <p class="subtitle">Click on any icon to copy its HTML code</p>
+        
+        <div id="copyMessage" class="copy-message">HTML code copied to clipboard!</div>
+        
+        <h2 class="category-title">Technology & Web</h2>
+        <div class="icon-grid">
+            <div class="icon-card" data-icon="fa-globe">
+                <div class="icon-display"><i class="fas fa-globe"></i></div>
+                <div class="icon-name">fa-globe</div>
+            </div>
+            <div class="icon-card" data-icon="fa-code">
+                <div class="icon-display"><i class="fas fa-code"></i></div>
+                <div class="icon-name">fa-code</div>
+            </div>
+            <div class="icon-card" data-icon="fa-laptop-code">
+                <div class="icon-display"><i class="fas fa-laptop-code"></i></div>
+                <div class="icon-name">fa-laptop-code</div>
+            </div>
+            <div class="icon-card" data-icon="fa-server">
+                <div class="icon-display"><i class="fas fa-server"></i></div>
+                <div class="icon-name">fa-server</div>
+            </div>
+            <div class="icon-card" data-icon="fa-database">
+                <div class="icon-display"><i class="fas fa-database"></i></div>
+                <div class="icon-name">fa-database</div>
+            </div>
+            <div class="icon-card" data-icon="fa-network-wired">
+                <div class="icon-display"><i class="fas fa-network-wired"></i></div>
+                <div class="icon-name">fa-network-wired</div>
+            </div>
+            <div class="icon-card" data-icon="fa-cloud">
+                <div class="icon-display"><i class="fas fa-cloud"></i></div>
+                <div class="icon-name">fa-cloud</div>
+            </div>
+            <div class="icon-card" data-icon="fa-wifi">
+                <div class="icon-display"><i class="fas fa-wifi"></i></div>
+                <div class="icon-name">fa-wifi</div>
+            </div>
+            <div class="icon-card" data-icon="fa-project-diagram">
+                <div class="icon-display"><i class="fas fa-project-diagram"></i></div>
+                <div class="icon-name">fa-project-diagram</div>
+            </div>
+            <div class="icon-card" data-icon="fa-microchip">
+                <div class="icon-display"><i class="fas fa-microchip"></i></div>
+                <div class="icon-name">fa-microchip</div>
+            </div>
+        </div>
+        
+        <h2 class="category-title">Business & Communication</h2>
+        <div class="icon-grid">
+            <div class="icon-card" data-icon="fa-comments">
+                <div class="icon-display"><i class="fas fa-comments"></i></div>
+                <div class="icon-name">fa-comments</div>
+            </div>
+            <div class="icon-card" data-icon="fa-users">
+                <div class="icon-display"><i class="fas fa-users"></i></div>
+                <div class="icon-name">fa-users</div>
+            </div>
+            <div class="icon-card" data-icon="fa-briefcase">
+                <div class="icon-display"><i class="fas fa-briefcase"></i></div>
+                <div class="icon-name">fa-briefcase</div>
+            </div>
+            <div class="icon-card" data-icon="fa-chart-line">
+                <div class="icon-display"><i class="fas fa-chart-line"></i></div>
+                <div class="icon-name">fa-chart-line</div>
+            </div>
+            <div class="icon-card" data-icon="fa-chart-pie">
+                <div class="icon-display"><i class="fas fa-chart-pie"></i></div>
+                <div class="icon-name">fa-chart-pie</div>
+            </div>
+            <div class="icon-card" data-icon="fa-handshake">
+                <div class="icon-display"><i class="fas fa-handshake"></i></div>
+                <div class="icon-name">fa-handshake</div>
+            </div>
+            <div class="icon-card" data-icon="fa-bullhorn">
+                <div class="icon-display"><i class="fas fa-bullhorn"></i></div>
+                <div class="icon-name">fa-bullhorn</div>
+            </div>
+            <div class="icon-card" data-icon="fa-envelope">
+                <div class="icon-display"><i class="fas fa-envelope"></i></div>
+                <div class="icon-name">fa-envelope</div>
+            </div>
+            <div class="icon-card" data-icon="fa-building">
+                <div class="icon-display"><i class="fas fa-building"></i></div>
+                <div class="icon-name">fa-building</div>
+            </div>
+            <div class="icon-card" data-icon="fa-lightbulb">
+                <div class="icon-display"><i class="fas fa-lightbulb"></i></div>
+                <div class="icon-name">fa-lightbulb</div>
+            </div>
+        </div>
+        
+        <h2 class="category-title">Social & Sharing</h2>
+        <div class="icon-grid">
+            <div class="icon-card" data-icon="fa-share-alt">
+                <div class="icon-display"><i class="fas fa-share-alt"></i></div>
+                <div class="icon-name">fa-share-alt</div>
+            </div>
+            <div class="icon-card" data-icon="fa-share-nodes">
+                <div class="icon-display"><i class="fas fa-share-nodes"></i></div>
+                <div class="icon-name">fa-share-nodes</div>
+            </div>
+            <div class="icon-card" data-icon="fa-hashtag">
+                <div class="icon-display"><i class="fas fa-hashtag"></i></div>
+                <div class="icon-name">fa-hashtag</div>
+            </div>
+            <div class="icon-card" data-icon="fa-thumbs-up">
+                <div class="icon-display"><i class="fas fa-thumbs-up"></i></div>
+                <div class="icon-name">fa-thumbs-up</div>
+            </div>
+            <div class="icon-card" data-icon="fa-heart">
+                <div class="icon-display"><i class="fas fa-heart"></i></div>
+                <div class="icon-name">fa-heart</div>
+            </div>
+            <div class="icon-card" data-icon="fa-link">
+                <div class="icon-display"><i class="fas fa-link"></i></div>
+                <div class="icon-name">fa-link</div>
+            </div>
+            <div class="icon-card" data-icon="fa-bell">
+                <div class="icon-display"><i class="fas fa-bell"></i></div>
+                <div class="icon-name">fa-bell</div>
+            </div>
+            <div class="icon-card" data-icon="fa-rss">
+                <div class="icon-display"><i class="fas fa-rss"></i></div>
+                <div class="icon-name">fa-rss</div>
+            </div>
+            <div class="icon-card" data-icon="fa-user-friends">
+                <div class="icon-display"><i class="fas fa-user-friends"></i></div>
+                <div class="icon-name">fa-user-friends</div>
+            </div>
+            <div class="icon-card" data-icon="fa-retweet">
+                <div class="icon-display"><i class="fas fa-retweet"></i></div>
+                <div class="icon-name">fa-retweet</div>
+            </div>
+        </div>
+        
+        <h2 class="category-title">Media & Content</h2>
+        <div class="icon-grid">
+            <div class="icon-card" data-icon="fa-photo-video">
+                <div class="icon-display"><i class="fas fa-photo-video"></i></div>
+                <div class="icon-name">fa-photo-video</div>
+            </div>
+            <div class="icon-card" data-icon="fa-images">
+                <div class="icon-display"><i class="fas fa-images"></i></div>
+                <div class="icon-name">fa-images</div>
+            </div>
+            <div class="icon-card" data-icon="fa-film">
+                <div class="icon-display"><i class="fas fa-film"></i></div>
+                <div class="icon-name">fa-film</div>
+            </div>
+            <div class="icon-card" data-icon="fa-music">
+                <div class="icon-display"><i class="fas fa-music"></i></div>
+                <div class="icon-name">fa-music</div>
+            </div>
+            <div class="icon-card" data-icon="fa-headphones">
+                <div class="icon-display"><i class="fas fa-headphones"></i></div>
+                <div class="icon-name">fa-headphones</div>
+            </div>
+            <div class="icon-card" data-icon="fa-podcast">
+                <div class="icon-display"><i class="fas fa-podcast"></i></div>
+                <div class="icon-name">fa-podcast</div>
+            </div>
+            <div class="icon-card" data-icon="fa-newspaper">
+                <div class="icon-display"><i class="fas fa-newspaper"></i></div>
+                <div class="icon-name">fa-newspaper</div>
+            </div>
+            <div class="icon-card" data-icon="fa-book">
+                <div class="icon-display"><i class="fas fa-book"></i></div>
+                <div class="icon-name">fa-book</div>
+            </div>
+            <div class="icon-card" data-icon="fa-pen">
+                <div class="icon-display"><i class="fas fa-pen"></i></div>
+                <div class="icon-name">fa-pen</div>
+            </div>
+            <div class="icon-card" data-icon="fa-camera">
+                <div class="icon-display"><i class="fas fa-camera"></i></div>
+                <div class="icon-name">fa-camera</div>
+            </div>
+        </div>
+        
+        <h2 class="category-title">Design & Creative</h2>
+        <div class="icon-grid">
+            <div class="icon-card" data-icon="fa-palette">
+                <div class="icon-display"><i class="fas fa-palette"></i></div>
+                <div class="icon-name">fa-palette</div>
+            </div>
+            <div class="icon-card" data-icon="fa-brush">
+                <div class="icon-display"><i class="fas fa-brush"></i></div>
+                <div class="icon-name">fa-brush</div>
+            </div>
+            <div class="icon-card" data-icon="fa-pencil-ruler">
+                <div class="icon-display"><i class="fas fa-pencil-ruler"></i></div>
+                <div class="icon-name">fa-pencil-ruler</div>
+            </div>
+            <div class="icon-card" data-icon="fa-vector-square">
+                <div class="icon-display"><i class="fas fa-vector-square"></i></div>
+                <div class="icon-name">fa-vector-square</div>
+            </div>
+            <div class="icon-card" data-icon="fa-swatchbook">
+                <div class="icon-display"><i class="fas fa-swatchbook"></i></div>
+                <div class="icon-name">fa-swatchbook</div>
+            </div>
+            <div class="icon-card" data-icon="fa-drafting-compass">
+                <div class="icon-display"><i class="fas fa-drafting-compass"></i></div>
+                <div class="icon-name">fa-drafting-compass</div>
+            </div>
+            <div class="icon-card" data-icon="fa-crop">
+                <div class="icon-display"><i class="fas fa-crop"></i></div>
+                <div class="icon-name">fa-crop</div>
+            </div>
+            <div class="icon-card" data-icon="fa-object-group">
+                <div class="icon-display"><i class="fas fa-object-group"></i></div>
+                <div class="icon-name">fa-object-group</div>
+            </div>
+            <div class="icon-card" data-icon="fa-magic">
+                <div class="icon-display"><i class="fas fa-magic"></i></div>
+                <div class="icon-name">fa-magic</div>
+            </div>
+            <div class="icon-card" data-icon="fa-layer-group">
+                <div class="icon-display"><i class="fas fa-layer-group"></i></div>
+                <div class="icon-name">fa-layer-group</div>
+            </div>
+        </div>
+        
+        <h2 class="category-title">Abstract & Geometric</h2>
+        <div class="icon-grid">
+            <div class="icon-card" data-icon="fa-cube">
+                <div class="icon-display"><i class="fas fa-cube"></i></div>
+                <div class="icon-name">fa-cube</div>
+            </div>
+            <div class="icon-card" data-icon="fa-cubes">
+                <div class="icon-display"><i class="fas fa-cubes"></i></div>
+                <div class="icon-name">fa-cubes</div>
+            </div>
+            <div class="icon-card" data-icon="fa-square">
+                <div class="icon-display"><i class="fas fa-square"></i></div>
+                <div class="icon-name">fa-square</div>
+            </div>
+            <div class="icon-card" data-icon="fa-circle">
+                <div class="icon-display"><i class="fas fa-circle"></i></div>
+                <div class="icon-name">fa-circle</div>
+            </div>
+            <div class="icon-card" data-icon="fa-shapes">
+                <div class="icon-display"><i class="fas fa-shapes"></i></div>
+                <div class="icon-name">fa-shapes</div>
+            </div>
+            <div class="icon-card" data-icon="fa-chart-bar">
+                <div class="icon-display"><i class="fas fa-chart-bar"></i></div>
+                <div class="icon-name">fa-chart-bar</div>
+            </div>
+            <div class="icon-card" data-icon="fa-asterisk">
+                <div class="icon-display"><i class="fas fa-asterisk"></i></div>
+                <div class="icon-name">fa-asterisk</div>
+            </div>
+            <div class="icon-card" data-icon="fa-atom">
+                <div class="icon-display"><i class="fas fa-atom"></i></div>
+                <div class="icon-name">fa-atom</div>
+            </div>
+            <div class="icon-card" data-icon="fa-adjust">
+                <div class="icon-display"><i class="fas fa-adjust"></i></div>
+                <div class="icon-name">fa-adjust</div>
+            </div>
+            <div class="icon-card" data-icon="fa-puzzle-piece">
+                <div class="icon-display"><i class="fas fa-puzzle-piece"></i></div>
+                <div class="icon-name">fa-puzzle-piece</div>
+            </div>
+        </div>
+        
+        <h2 class="category-title">Brand Symbols</h2>
+        <div class="icon-grid">
+            <div class="icon-card" data-icon="fa-react">
+                <div class="icon-display"><i class="fab fa-react"></i></div>
+                <div class="icon-name">fa-react</div>
+            </div>
+            <div class="icon-card" data-icon="fa-node">
+                <div class="icon-display"><i class="fab fa-node"></i></div>
+                <div class="icon-name">fa-node</div>
+            </div>
+            <div class="icon-card" data-icon="fa-npm">
+                <div class="icon-display"><i class="fab fa-npm"></i></div>
+                <div class="icon-name">fa-npm</div>
+            </div>
+            <div class="icon-card" data-icon="fa-js-square">
+                <div class="icon-display"><i class="fab fa-js-square"></i></div>
+                <div class="icon-name">fa-js-square</div>
+            </div>
+            <div class="icon-card" data-icon="fa-html5">
+                <div class="icon-display"><i class="fab fa-html5"></i></div>
+                <div class="icon-name">fa-html5</div>
+            </div>
+            <div class="icon-card" data-icon="fa-css3-alt">
+                <div class="icon-display"><i class="fab fa-css3-alt"></i></div>
+                <div class="icon-name">fa-css3-alt</div>
+            </div>
+            <div class="icon-card" data-icon="fa-angular">
+                <div class="icon-display"><i class="fab fa-angular"></i></div>
+                <div class="icon-name">fa-angular</div>
+            </div>
+            <div class="icon-card" data-icon="fa-vuejs">
+                <div class="icon-display"><i class="fab fa-vuejs"></i></div>
+                <div class="icon-name">fa-vuejs</div>
+            </div>
+            <div class="icon-card" data-icon="fa-github">
+                <div class="icon-display"><i class="fab fa-github"></i></div>
+                <div class="icon-name">fa-github</div>
+            </div>
+            <div class="icon-card" data-icon="fa-aws">
+                <div class="icon-display"><i class="fab fa-aws"></i></div>
+                <div class="icon-name">fa-aws</div>
+            </div>
+        </div>
+        
+        <h2 class="category-title">Miscellaneous</h2>
+        <div class="icon-grid">
+            <div class="icon-card" data-icon="fa-bolt">
+                <div class="icon-display"><i class="fas fa-bolt"></i></div>
+                <div class="icon-name">fa-bolt</div>
+            </div>
+            <div class="icon-card" data-icon="fa-fire">
+                <div class="icon-display"><i class="fas fa-fire"></i></div>
+                <div class="icon-name">fa-fire</div>
+            </div>
+            <div class="icon-card" data-icon="fa-rocket">
+                <div class="icon-display"><i class="fas fa-rocket"></i></div>
+                <div class="icon-name">fa-rocket</div>
+            </div>
+            <div class="icon-card" data-icon="fa-gem">
+                <div class="icon-display"><i class="fas fa-gem"></i></div>
+                <div class="icon-name">fa-gem</div>
+            </div>
+            <div class="icon-card" data-icon="fa-compass">
+                <div class="icon-display"><i class="fas fa-compass"></i></div>
+                <div class="icon-name">fa-compass</div>
+            </div>
+            <div class="icon-card" data-icon="fa-graduation-cap">
+                <div class="icon-display"><i class="fas fa-graduation-cap"></i></div>
+                <div class="icon-name">fa-graduation-cap</div>
+            </div>
+            <div class="icon-card" data-icon="fa-flag">
+                <div class="icon-display"><i class="fas fa-flag"></i></div>
+                <div class="icon-name">fa-flag</div>
+            </div>
+            <div class="icon-card" data-icon="fa-shield-alt">
+                <div class="icon-display"><i class="fas fa-shield-alt"></i></div>
+                <div class="icon-name">fa-shield-alt</div>
+            </div>
+            <div class="icon-card" data-icon="fa-cog">
+                <div class="icon-display"><i class="fas fa-cog"></i></div>
+                <div class="icon-name">fa-cog</div>
+            </div>
+            <div class="icon-card" data-icon="fa-terminal">
+                <div class="icon-display"><i class="fas fa-terminal"></i></div>
+                <div class="icon-name">fa-terminal</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const iconCards = document.querySelectorAll('.icon-card');
+            const copyMessage = document.getElementById('copyMessage');
+            
+            iconCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const iconName = this.getAttribute('data-icon');
+                    const prefix = iconName.startsWith('fa-') ? (
+                        this.querySelector('.icon-display i').classList.contains('fab') ? 'fab' : 'fas'
+                    ) : 'fas';
+                    
+                    const htmlCode = `<i class="${prefix} ${iconName}"></i>`;
+                    
+                    // Copy to clipboard
+                    navigator.clipboard.writeText(htmlCode)
+                        .then(() => {
+                            // Show the copy message
+                            copyMessage.style.display = 'block';
+                            
+                            // Hide after 2 seconds
+                            setTimeout(() => {
+                                copyMessage.style.display = 'none';
+                            }, 2000);
+                        })
+                        .catch(err => {
+                            console.error('Could not copy text: ', err);
+                        });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
