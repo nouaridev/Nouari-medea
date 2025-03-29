@@ -260,8 +260,9 @@
          
 
 
+            // infinite scroling variable 
 
-
+            localStorage.setItem('page' , 1); 
 
 
 
@@ -307,16 +308,16 @@
                 }
 
             //getposts function : 
-                let getPosts = async ()=>{
-                    let url= 'https://tarmeezacademy.com/api/v1/posts?limit=20';
+                let getPosts = async (page)=>{
+                    let url= `https://tarmeezacademy.com/api/v1/posts?limit=10&page=${page}`;
                     let response= await axios.get(url); 
                     
                     return response.data.data
                 }
 
             //fillingposts :
-                let fillPosts =async ()=>{
-                    let posts = await getPosts();
+                let fillPosts =async (page)=>{
+                    let posts = await getPosts(page);
                     let postContainer =document.querySelector('.main-content .posts') ; 
                    
                     posts.forEach((post)=>{
@@ -370,6 +371,9 @@
                         })
                     })
                     
+
+                    //increment the page : 
+                    localStorage.setItem('page' , localStorage.getItem('page')+ 1 ) ; 
                        
                 }
 
@@ -482,11 +486,19 @@
                     fillInfo()
 
 
+                    //for now we will impelent the infinite scroling : 
+                            let lazyLoad = new 
+                            IntersectionObserver(final=>{
+                                if(final[0].isIntersecting){
+                                        //filling the posts 
+                                        fillPosts(localStorage.getItem('page'))  ; 
+                                }
+                            })
+                            
+                      // now defining the element that indicates the end;: 
                     //filling the posts 
-                    fillPosts() 
-
-
-
+                    lazyLoad.observe(document.querySelector('.infinite-scroll') )
+                    
                     // add post tags  
                      getTags() ; 
                  
@@ -499,6 +511,7 @@
                         }) ;
 
                   
+                   
                 }
             
 
