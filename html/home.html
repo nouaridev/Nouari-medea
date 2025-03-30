@@ -52,14 +52,14 @@
                         </div>
                         <div class="mb-3">
 
-                            <!-- select posts tags -->
+                            <!-- select posts tags
                             <div class="dropdown">
                                 <button onclick="toggleDropdown()" class="btn btn-primary">Select Options</button>
                                 <div id="options" class="dropdown-content">
 
                                 </div>
                             </div>
-                            <div class="selected-items"></div>
+                            <div class="selected-items"></div> -->
 
                         </div>
                     </form>
@@ -72,6 +72,8 @@
         </div>
     </div>
 
+
+  
 
     <!-- allert section -->
     <div id="alerts"></div>
@@ -105,14 +107,29 @@
     <!-- side bar -->
     <aside class="sidebar">
         <div class="user-info">
-           
+            <button class="visit-profile btn btn-primary w-100"> <i class="fas fa-user"></i> Visit Profile</button>
         </div>
-    
-        <nav class="sidebar-menu">
-            <ul>
-                <li><a href="#"><i class="fa-regular fa-copy"></i> My Posts</a></li>
-            </ul>
-    
+        <div class="stats-section">
+            <div class="stats-header">
+                <i class="fas fa-chart-bar"></i> Statistics
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item-users">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-number">..</div>
+                    <div class="stat-label">USERS</div>
+                </div>
+                <div class="stat-item-posts">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="stat-number">..</div>
+                    <div class="stat-label">POSTS</div>
+                </div>
+            </div>
+        </div>
         <aside class="right-sidebar">
             <h3><i class="fa-solid fa-tags"></i></h3>
             <ul>
