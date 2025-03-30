@@ -30,7 +30,7 @@
             let alerts = document.getElementById('alerts')
            
 
-            const alert = (message, type) => {
+            const alert = (message, type , time) => {
                 alerts.style.zIndex = 1000 ;
                 alerts.style.opacity = 1 ; 
                 const wrapper = document.createElement('div')
@@ -40,7 +40,7 @@
                 `   <div>${message}</div>`,
                 '</div>'
                 ].join('')
-            
+            let timee = time || 2000 ;
                 alerts.append(wrapper)
                 let alertbox = document.querySelector('.alert');
                 let bsAlert = new bootstrap.Alert(alertbox);
@@ -50,7 +50,7 @@
                     alerts.style.opacity = 0 ;
                     alerts.style.zIndex = -99;
                     
-                       },2000)
+                       },timee)
             }
             
         //fucntions for get and set token : 
@@ -125,6 +125,9 @@
                      }
                     try{
                         let response = await axios.post(url , body);
+                        if (response.status >= 200 && response.status<=299){
+                            alert('<i class="fa-solid fa-dove"></i> done!' , 'success');
+                        }
                         return response.data ; 
                     }catch(e){
                         console.log(e)
@@ -149,7 +152,7 @@
                                
                             },2300)
 
-                            alert('<i class="fa-solid fa-dove"></i> done!' , 'success');
+                           
 
                         } catch (error) {
                             alert('something wrong' , 'warning');
@@ -221,9 +224,6 @@
 
          
 
-         
-         
-
         let submitBtn = document.getElementById('signup-btn');
      //using the login function :
         submitBtn.addEventListener('click' , async(e)=>{
@@ -280,9 +280,9 @@
             localStorage.removeItem('openedPost');// this attribute removed the id of the previews post that opened 
           
             //fill user info function 
-                let fillInfo = ()=>{
-                    let info = getUserData() ; 
-                    
+                let fillInfo =async ()=>{
+                    let info1 = getUserData() ; 
+                  
 
                     // let navbar = document.querySelector('.navbar ');
                     // navbar.innerHTML += `<img src=${info.progile_image} alt="Profile" class="profile-pic">`
@@ -291,12 +291,18 @@
                                     
 
                     let profileCard = document.querySelector('.sidebar .user-info');
-                    profileCard.innerHTML = `
-                        <img src=${info.profile_image} alt="Profile Picture">
+                    let newuserinfo = await axios.get(`https://tarmeezacademy.com/api/v1/users/${info1.id}`)
+          
+                    setUserData(newuserinfo.data.data); 
+
+                    let info = getUserData() ; 
+                    let user = document.createElement('div')
+                    user.innerHTML = `
+                       <img src=${info.profile_image} alt="Profile Picture">
                         <h3 class="logged-user-name">${info.name}</h3>
                         <p>Posts: <span>${info.posts_count}</span></p>
-                        <button class="edit-profile"><i class="fa-solid fa-user-pen"></i></button>
                     `
+                    profileCard.prepend(user) ;
 
                     let tags = document.querySelector('.right-sidebar ul') ;
                     let url = 'https://tarmeezacademy.com/api/v1/tags';
@@ -304,6 +310,16 @@
                         e.data.data.forEach(tag=> {
                             tags.innerHTML+= `<li><i class="fa-solid fa-hashtag"></i> ${tag.name}</li>`
                         });
+                    })
+
+                    //fill post stats : 
+                    let totalPosts = document.querySelector('.sidebar .stats-section .stat-item-posts .stat-number');
+                    totalPosts.innerHTML = `${localStorage.getItem('totalPosts')}`
+
+                    //fill users stats : 
+                    axios.get('https://tarmeezacademy.com/api/v1/users?limit=1').then((res)=>{
+                        let totalusers = document.querySelector('.sidebar .stats-section .stat-item-users .stat-number');
+                        totalusers.innerHTML = `${res.data.meta.total}`
                     })
                 }
 
@@ -325,6 +341,11 @@
                                 try {
                                     let res = await axios.get(url);
                                     localStorage.setItem('isfetching', false);
+
+                                    if(!localStorage.getItem('totalPosts')){
+                                        localStorage.setItem('totalPosts' , res.data.meta.total) ; 
+                                    }
+
                                     return res.data.data; // ✅ Correctly return posts
                                 } catch (error) {
                                     console.error("Error fetching posts:", error);
@@ -350,7 +371,7 @@
                         // Fill posts 
                         const fillPosts = async (page) => {
                             let posts = await getPosts(page); // Wait for posts to be fetched
-
+                         
                             let postContainer = document.querySelector('.main-content .posts'); 
                             if (!posts || posts.length === 0) return; 
 
@@ -424,61 +445,61 @@
 
             //fetching tags 
 
-                let getTags = ()=>{
-                    axios.get('https://tarmeezacademy.com/api/v1/tags').then((res)=>{
-                       let tags = res.data.data;
-                       console.log(tags) ; 
-                       let dropdown =  document.querySelector('.dropdown-content') ;
-                       tags.forEach((tag)=>{
-                            console.log(tag.name)
-                           dropdown.innerHTML += `
-                            <label><input type="checkbox" value="#${tag.name}">#${tag.name}</label>
-                           `
-                       })
-                        //fo now  i will put the add post drp down input 
+                // let getTags = ()=>{
+                //     axios.get('https://tarmeezacademy.com/api/v1/tags').then((res)=>{
+                //        let tags = res.data.data;
+                //        console.log(tags) ; 
+                //        let dropdown =  document.querySelector('.dropdown-content') ;
+                //        tags.forEach((tag)=>{
+                //             console.log(tag.name)
+                //            dropdown.innerHTML += `
+                //             <label><input type="checkbox" value="#${tag.name}">#${tag.name}</label>
+                //            `
+                //        })
+                //         //fo now  i will put the add post drp down input 
                         
-                            function toggleDropdown() {
-                                document.getElementById("options").classList.toggle("show");
-                            }
+                //             function toggleDropdown() {
+                //                 document.getElementById("options").classList.toggle("show");
+                //             }
                     
-                            window.onclick = function(event) {
-                                if (!event.target.matches('.dropdown button')) {
-                                    let dropdowns = document.getElementsByClassName("dropdown-content");
-                                    for (let i = 0; i < dropdowns.length; i++) {
-                                        let openDropdown = dropdowns[i];
-                                        if (openDropdown.classList.contains('show')) {
-                                            openDropdown.classList.remove('show');
-                                        }
-                                    }
-                                }
-                            }
+                //             window.onclick = function(event) {
+                //                 if (!event.target.matches('.dropdown button')) {
+                //                     let dropdowns = document.getElementsByClassName("dropdown-content");
+                //                     for (let i = 0; i < dropdowns.length; i++) {
+                //                         let openDropdown = dropdowns[i];
+                //                         if (openDropdown.classList.contains('show')) {
+                //                             openDropdown.classList.remove('show');
+                //                         }
+                //                     }
+                //                 }
+                //             }
                     
-                            document.querySelectorAll('.dropdown-content input[type="checkbox"]').forEach(checkbox => {
-                            checkbox.addEventListener('change', function() {
-                                const text = this.value;
-                                const selectedItems = document.querySelector('.selected-items');
-                                const existingItem = selectedItems.querySelector(`[data-value="${text}"]`);
+                //             document.querySelectorAll('.dropdown-content input[type="checkbox"]').forEach(checkbox => {
+                //             checkbox.addEventListener('change', function() {
+                //                 const text = this.value;
+                //                 const selectedItems = document.querySelector('.selected-items');
+                //                 const existingItem = selectedItems.querySelector(`[data-value="${text}"]`);
                 
-                                if (this.checked) {
-                                    if (!existingItem) {
-                                        const selectedItem = document.createElement('div');
-                                        selectedItem.className = 'selected-item'
-                                        selectedItem.setAttribute('data-value', text);
-                                        selectedItem.innerText = text;
-                                        selectedItems.appendChild(selectedItem);
-                                    }
-                                } else {
-                                    if (existingItem) {
-                                        existingItem.remove();
-                                    }
-                                }
-                        });
-                    }
-                            );
+                //                 if (this.checked) {
+                //                     if (!existingItem) {
+                //                         const selectedItem = document.createElement('div');
+                //                         selectedItem.className = 'selected-item'
+                //                         selectedItem.setAttribute('data-value', text);
+                //                         selectedItem.innerText = text;
+                //                         selectedItems.appendChild(selectedItem);
+                //                     }
+                //                 } else {
+                //                     if (existingItem) {
+                //                         existingItem.remove();
+                //                     }
+                //                 }
+                //         });
+                //     }
+                //             );
 
             
-                    })
-                }
+                //     })
+                // }
             
             //add post function : 
                 let sendPost = async()=>{
@@ -527,17 +548,17 @@
                         localStorage.removeItem('logeinnow')
                     }
 
-                    //filling user info 
-                    fillInfo()
-
+                  
 
              
                       // now defining the element that indicates the end;: 
                     //filling the posts 
                     fillPosts(localStorage.getItem('page'))
-                    
-                    // add post tags  
-                     getTags() ; 
+                      //filling user info 
+                    fillInfo()
+
+                    // // add post tags  
+                    //  getTags() ; 
                  
 
                      //for now we will use the add post funcion
@@ -691,5 +712,188 @@
 
 
         /* ==================== end of post page =====================*/
+}else if (window.location.href.includes('/html/userProfile.html')){
+        /* ==================== start of local user page =====================*/
+
+        //increase the height of the infinite loop 
+        let inf = document.querySelector('.infinite-scroll');
+        inf.style.minHeight = '60vh' ; 
+        inf.style.alignItems = 'center';
+             
+        //get user info
+        let getUser = async(id)=> {
+            let url = `https://tarmeezacademy.com/api/v1/users/${id}` ; 
+            let user = await axios.get(url) ; 
+            return user.data.data
+        }
+
+        //get user posts : 
+        let getPosts = async(id)=>{
+            let url  = `https://tarmeezacademy.com/api/v1/users/${id}/posts`;
+            let posts = await axios.get(url) ;
+            console.log(posts) ;
+            posts = posts.data.data  ;
+            
+            return posts ; 
+        }
+        
+
+        //fill posts : 
+        let fillPosts =async ()=>{
+            const id = getUserData().id ;
+            let posts = await getPosts(id) ;  
+           
+            let postbox = document.querySelector('.main-content .posts') ; 
+
+            if (posts){
+                posts.forEach((post ,index)=>{
+                    let postt = document.createElement('div'); 
+                    postt.classList.add('post') ; 
+                    postt.innerHTML = `
+                          <div class="post-header">
+                                            <img src="${post.author.profile_image}" alt="User" class="post-user-pic">
+                                            <div class="post-user-info">
+                                                <h4>${post.author.name}</h4>
+                                                <p class="post-time"><i class="fa-solid fa-user-clock"></i> ${post.created_at}</p>
+                                            </div>
+                                        </div>
+                                        <img src="${post.image}" alt="Post Image" class="post-image">
+                                        <div class="post-content">
+                                            <h3>${post.title}</h3>
+                                            <p>${post.body}</p>
+                                        </div>
+                                        <div class="post-actions">
+                                            <button class="comment-btn" data-id="${post.id}">  <i class="fa-solid fa-comment-nodes"></i> ${post.comments_count} </button>
+                                            <button class="share-btn"><i class="fas fa-pen"></i></button>
+                                            <button class="share-btn"><i class="fa-solid fa-share"></i></button>
+                                            <button class="share-btn"><i <i class="fa-solid fa-share"></i>class="fa-solid fa-share"></i></button>
+                                        </div>
+                    `
+
+                    postt.style.opacity = 0 ; 
+                    postt.style.transform = 'translateY(10px)';
+                    postt.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+
+                    postt.querySelector('.comment-btn').addEventListener('click', (e) => {
+                        let postId = e.target.closest(".comment-btn").getAttribute('data-id');
+                        if (postId) {
+                            window.location.href = `/html/post.html?id=${postId}`;
+                        }
+                    });
+                    setTimeout(()=>{
+                        postbox.append(postt) ;
+                        setTimeout(() => {
+                            postt.style.opacity = 1 ; 
+                            postt.style.transform = 'translateY(0px)';
+                            
+                        },500);
+                    }, 1000*index)
+                     
+    
+                })
+
+            
+                //hide the loader
+                inf.style.display = 'none';
+            }
+
+            
+
+        }
+
+
+        //fill user info: 
+        let fillUserInfo = async(id)=>{
+            let user = await getUser(id) ; 
+            if(!user){
+                alert('user doesnt exist' , 'warning') ; 
+                setTimeout(()=>{
+                    goToHome() ; 
+                },2100)
+            }else{
+                let userInfo = document.querySelector('.user-info') ; 
+                let statsSection = document.querySelector('.stats-section') ; 
+                let righSide = document.querySelector('.right-sidebar'); 
+
+                document.querySelector('.main-content .user-post-h').innerHTML = `${user.username}'s posts`; 
+
+                userInfo.innerHTML = `
+                       <img src="${user.profile_image}" alt="Profile Picture">
+                      <h3 class="logged-user-name">${user.name}</h3>
+                      <p>User name: <span>${user.username}</span></p>
+                `
+
+                statsSection.innerHTML= `
+                     <div class="stats-header">
+                <i class="fas fa-chart-bar"></i> Statistics
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item-comments">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-number">${user.comments_count}</div>
+                    <div class="stat-label">comments</div>
+                </div>
+                <div class="stat-item-posts">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="stat-number">${user.posts_count}</div>
+                    <div class="stat-label">POSTS</div>
+                </div>
+            </div>
+                `
+
+            righSide.innerHTML = `
+                  <h3><i class="fas fa-handshake"></i></h3>
+            <ul>
+                <li class="email" data=${user.email}><i class="fas fa-envelope"></i>${user.email}</li>
+                <li class="link" data=${user.id}><i class="fas fa-link"></i> click to get link</li>
+
+            </ul>
+            `
+        
+
+            //handling click on email and get link 
+
+            let email = document.querySelector('.right-sidebar .email') ;
+            let link = document.querySelector('.right-sidebar .link') ; 
+            email.addEventListener('click' , (e)=>{
+                navigator.clipboard.writeText(`${e.target.getAttribute('data')}`)
+                alert('email copied<i class="fas fa-heart"></i>' , 'success')
+            })
+            link.addEventListener('click' , (e)=>{
+                navigator.clipboard.writeText(`${window.location.href}`)
+                alert('profile link copied   <i class="fas fa-heart"></i>' , 'success')
+            })
+        }
+    
+        }
+
+
+
+
+        //check log in : 
+         //first checks if the user already loged in :
+         if(!isLogedIn()){
+            alert('try to login bro' , 'danger');
+            setTimeout(()=>{
+                goLogin();
+            } , 2100)
+        }else{
+            const id = getUserData().id ;
+            //get user info 
+            fillUserInfo(id) ; 
+
+            //get user posts and fill 
+            fillPosts()
+
+             
+        }
+
+
+
+
 }
 
