@@ -174,7 +174,7 @@
 
 
 /* ===================End of the login page =====================*/
-    }else if(window.location.href.includes('/signup.html')){
+    }else if(window.location.href.includes('/signup')){
 /* ==================== Handlingthe signup page =====================*/
 
 
