@@ -739,7 +739,7 @@
 
 
     /* ==================== end of post page =====================*/
-}else if (window.location.href.includes('html/userProfile')){
+}else if (window.location.href.includes('html/userprofile')){
     /* ==================== start of local user page =====================*/
 
     //increase the height of the infinite loop 
