@@ -246,7 +246,7 @@ body{
     color: white;
     text-align: center;
     transition: 0.3s ease-in-out;
-  
+    height: f;
 }
 
 
@@ -743,6 +743,9 @@ body{
     overflow-y: auto;  
 }
 
+.sidebar::-webkit-scrollbar{
+    width: 0;
+}
 .wrapper {
     
     display: flex;
@@ -1357,4 +1360,46 @@ align-items: center;
         align-items: center;
         flex-direction: column;
         font-size: 10px;
+    }
+
+
+
+
+    /* local user post actions  */
+
+    .localuser-body  .main-content .posts .post .post-actions .private-post-edit .del-btn:hover{
+        background-color: red;
+    }
+
+    .localuser-body  .main-content .posts .post .post-actions .private-post-edit .edit-btn:hover{
+        background-color:rgba(255, 152, 0, 0.5);
+    }
+
+
+
+    /* modals  */
+
+    .localuser-body #delete-post-modal .modal-dialog .modal-content{
+        background-color: #172554 !important;
+        border-radius: 12px;
+        background: none;
+
+    }
+
+    .localuser-body #delete-post-modal .modal-dialog .modal-content .modal-footer .cancel{
+        background: none;
+        background-color: #9CA3AF ;
+        color: #ffffff;
+    }
+    .localuser-body #delete-post-modal .modal-dialog .modal-content .modal-footer .cancel:hover{
+        background-color:  #4b5563;
+    }
+
+    .localuser-body #delete-post-modal .modal-dialog .modal-content .modal-footer .delete:hover{
+        background-color: #b91c1c;
+    }
+
+    .localuser-body #delete-post-modal .modal-dialog .modal-content .modal-footer  .delete{
+        background: none;
+        background-color: #dc2626 ;
     }
