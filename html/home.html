@@ -3,32 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home page</title>
+    <title>Home Page</title>
 
     <!-- Bootstrap -->
     <script src="../libs/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- Bootstrap CSS -->
     <link href="../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Axios -->
     <script src="../libs/axios/dist/axios.min.js"></script>
 
-       <!-- font awesome  -->
-       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-     
-  
-    <link rel="stylesheet" href="./../css/main.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="./../css/main.css">
 </head>
 <body>
 
-    <!-- add post button -->
-    <div class="add-post" data-bs-toggle="modal" type="button" data-bs-target="#createPostModal"><i class="fa-solid fa-square-plus"></i></div> 
-    
+    <!-- loader -->
+    <div class="load-cont">
+        <span class="loaderr"></span>
+    </div>
+    <!-- Add Post Button -->
+    <div class="add-post" data-bs-toggle="modal" type="button" data-bs-target="#createPostModal">
+        <i class="fa-solid fa-square-plus"></i>
+    </div>
 
-
-    <!-- post modal -->
-    <!-- The Modal -->
+    <!-- Post Modal -->
     <div class="modal fade add post-modal" id="createPostModal" tabindex="-1" aria-labelledby="createPostModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -50,18 +51,6 @@
                             <label for="postImage" class="form-label">Upload Picture</label>
                             <input type="file" class="form-control" id="postImage" accept="image/*">
                         </div>
-                        <div class="mb-3">
-
-                            <!-- select posts tags
-                            <div class="dropdown">
-                                <button onclick="toggleDropdown()" class="btn btn-primary">Select Options</button>
-                                <div id="options" class="dropdown-content">
-
-                                </div>
-                            </div>
-                            <div class="selected-items"></div> -->
-
-                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -72,103 +61,74 @@
         </div>
     </div>
 
-
-  
-
-    <!-- allert section -->
+    <!-- Alert Section -->
     <div id="alerts"></div>
 
-        <!-- 📌 Navbar-->
-        <div class="container navbar-container " >
-            <nav class="navbar">
-                <div class="nav-left">
-                    <div class="logo">NRI <i class="fas fa-share-nodes"></i></div>
-                </div>
-                <!-- <div class="analystics">
-                    <div class="nbrusers"><span> 899  </span><i class="fa-solid fa-users"></i></div>
-                    <div class="nbrposts">14303 <i class="fa-solid fa-clipboard"></i></div>
-                </div> -->
-                <div class="nav-links">
-                    <a class="home-btn btn"><i class="fa-solid fa-house"></i></a>
-                    <a class="log-out btn" ><i class="fa-solid fa-right-from-bracket"></i></a>
-                </div>
-            </nav>
-        </div>
-     
-    
-        
-
-<!-- the main content  -->
- 
-
-<div class="container">
-
-<div class="wrapper">
-    <!-- side bar -->
-    <aside class="sidebar">
-        <div class="user-info">
-            <button class="visit-profile btn btn-primary w-100"  > <i class="fas fa-user"></i> Visit Profile</button>
-        </div>
-        <div class="stats-section">
-            <div class="stats-header">
-                <i class="fas fa-chart-bar"></i> Statistics
+    <!-- Navbar -->
+    <div class="container navbar-container">
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="logo">NRI <i class="fas fa-share-nodes"></i></div>
             </div>
-            <div class="stats-grid">
-                <div class="stat-item-users">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-number">..</div>
-                    <div class="stat-label">USERS</div>
-                </div>
-                <div class="stat-item-posts">
-                    <div class="stat-icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <div class="stat-number">..</div>
-                    <div class="stat-label">POSTS</div>
-                </div>
+            <div class="nav-links">
+                <a class="home-btn btn"><i class="fa-solid fa-house"></i></a>
+                <a class="log-out btn"><i class="fa-solid fa-right-from-bracket"></i></a>
             </div>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="wrapper">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="user-info">
+                    <button class="visit-profile btn btn-primary w-100">
+                        <i class="fas fa-user"></i> Visit Profile
+                    </button>
+                </div>
+                <div class="stats-section">
+                    <div class="stats-header">
+                        <i class="fas fa-chart-bar"></i> Statistics
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-item-users">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-number">..</div>
+                            <div class="stat-label">USERS</div>
+                        </div>
+                        <div class="stat-item-posts">
+                            <div class="stat-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="stat-number">..</div>
+                            <div class="stat-label">POSTS</div>
+                        </div>
+                    </div>
+                </div>
+                <aside class="right-sidebar">
+                    <h3><i class="fa-solid fa-heart-circle-check" style="color: darkgreen;"></i></h3>
+                    <ul>
+                        <li>Special thanks to <strong>Tarmeez Academy</strong> for providing the <strong>Backend & Rest API</strong>. Check out their courses on <a href="https://www.youtube.com/@tarmeez" target="_blank"><i class="fa-brands fa-youtube" style="color :rgb(192, 5, 5); font-size: 30px;"></i></a></li>
+                    </ul>
+                </aside>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <h2 style="color: white;">Latest Posts</h2>
+                <div class="posts">
+                    <!-- Posts will be displayed here -->
+                </div>
+                <div class="infinite-scroll">
+                    <div class="loader"></div>
+                </div>
+            </main>
         </div>
-        <aside class="right-sidebar">
-            <h3><i class="fa-solid fa-heart-circle-check" style="color: darkgreen;"></i></h3>
-            <ul>
-                <li>Special thanks to <strong>Tarmeez Academy</strong> for providing the <strong>Backend & Rest API</strong>. Check out their courses on <a href="https://www.youtube.com/@tarmeez" target="_blank"><i class="fa-brands fa-youtube" style="color :rgb(192, 5, 5) ; font-size: 30px;"></i></a></li>
+    </div>
 
-            </ul>
-        </aside>
-    </aside>
-    
-
-    <!-- main content -->
-    <main class="main-content" >
-        <h2 style="color: white;">Latest Posts</h2>
-        <div class="posts">
-            
-          
-
-
-           
-        </div>
-    <div class="infinite-scroll">
-            <div class="loader"></div>
-        </div>
-   
-    </main>
-  
-  
-    
- 
-</div>
-
-
-</div>
-
-
-
-
-
-
-          <script src="main.js" ></script> 
+    <script src="../main.js"></script>
 </body>
 </html>

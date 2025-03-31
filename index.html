@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NRI-MEDIA</title>
+
+    <!-- External CSS and Scripts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-       <!-- Bootstrap -->
-       <script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
-       <!-- Bootstrap CSS -->
-       <link href="libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-   
-       <!-- Axios -->
-       <script src="libs/axios/dist/axios.min.js"></script>
-   
-          <!-- font awesome  -->
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-        
-          <!-- initial css -->
-           <link rel="stylesheet" href="/css/main.css">
+    <script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link href="libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="libs/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+
+    <!-- Internal CSS -->
     <style>
+        /* General Body Styles */
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background: #0d1117;
             color: white;
         }
+
+        /* Popup Styles */
         .popup-overlay {
             position: fixed;
             top: 0;
@@ -37,6 +37,7 @@
             justify-content: center;
             z-index: 1000;
         }
+
         .popup {
             background: #121826;
             color: #ffffff;
@@ -46,27 +47,35 @@
             text-align: center;
             box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.4);
         }
+
         .popup h2 {
             font-size: 30px;
             margin-bottom: 20px;
         }
+
         .highlight {
             color: #4db5ff;
             font-weight: bold;
             font-size: 22px;
         }
+
+        /* Social Icons */
         .social-icons {
             margin: 20px 0;
         }
+
         .social-icons a {
             color: #4db5ff;
             font-size: 28px;
             margin: 0 15px;
             transition: 0.3s;
         }
+
         .social-icons a:hover {
             color: #00aaff;
         }
+
+        /* Warning Message */
         .warning {
             font-size: 18px;
             background: rgba(255, 0, 0, 0.3);
@@ -75,6 +84,8 @@
             margin: 20px 0;
             font-weight: bold;
         }
+
+        /* Close Button */
         .close-btn {
             background: #4db5ff;
             color: white;
@@ -85,85 +96,97 @@
             border-radius: 10px;
             transition: 0.3s;
         }
+
         .close-btn:hover {
             background: #00aaff;
         }
 
-
+        /* Media Queries for Responsiveness */
         @media (max-width: 768px) {
-    .popup {
-        width: 80%; /* تقليل العرض على الأجهزة اللوحية */
-        padding: 15px;
-    }
-    .popup h2 {
-        font-size: 20px;
-    }
-    .popup p {
-        font-size: 14px;
-    }
-    .social-icons a {
-        font-size: 18px;
-    }
-    .close-btn {
-        font-size: 16px;
-    }
-}
+            .popup {
+                width: 80%;
+                padding: 15px;
+            }
 
-@media (max-width: 480px) {
-    .popup {
-        width: 85%; /* الحفاظ على مسافة من الحواف */
-        padding: 12px;
-    }
-    .popup h2 {
-        font-size: 18px;
-    }
-    .popup p {
-        font-size: 13px;
-    }
-    .social-icons a {
-        font-size: 16px;
-        margin: 5px;
-    }
-    .warning {
-        font-size: 12px;
-    }
-    .close-btn {
-        font-size: 14px;
-    }
-}
+            .popup h2 {
+                font-size: 20px;
+            }
 
-@media (max-width: 360px) {
-    .popup {
-        width: 90%; /* أصغر عرض لكن ليس 100% */
-        height: auto; /* السماح بتمدد المحتوى دون أن يملأ الشاشة */
-        padding: 10px;
-    }
-}
+            .popup p {
+                font-size: 14px;
+            }
 
+            .social-icons a {
+                font-size: 18px;
+            }
+
+            .close-btn {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .popup {
+                width: 85%;
+                padding: 12px;
+            }
+
+            .popup h2 {
+                font-size: 18px;
+            }
+
+            .popup p {
+                font-size: 13px;
+            }
+
+            .social-icons a {
+                font-size: 16px;
+                margin: 5px;
+            }
+
+            .warning {
+                font-size: 12px;
+            }
+
+            .close-btn {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .popup {
+                width: 90%;
+                height: auto;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
+
 <body>
-    
-    <!-- allert section -->
+
+    <!-- Alert Section -->
     <div class="container">
         <div id="alerts"></div>
     </div>
+
     <script>
-     
-        window.onload = ()=>{
+        window.onload = () => {
             alert(`
-                        <div class="popup-overlay">
+                <div class="popup-overlay">
                     <div class="popup">
                         <h2>NRI-Media</h2>
                         <p>Developed by <span class="highlight">Ismail Nouari</span></p>
-                         <div class="social-icons">
+
+                        <div class="social-icons">
                             <a href="https://www.npmjs.com/" target="_blank"><i class="fab fa-npm"></i></a>
-                            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank"><i class="fab fa-js-square"></i></i></a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank"><i class="fab fa-js-square"></i></a>
                             <a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank"><i class="fab fa-css3-alt"></i></a>
-                            <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank"><i class="fab fa-html5"></i></i></a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank"><i class="fab fa-html5"></i></a>
                         </div>
+
                         <p>Your go-to platform for sharing and discovering amazing content!</p>
-                        
+
                         <div class="social-icons">
                             <a href="https://web.facebook.com/aderyndev" target="_blank"><i class="fab fa-facebook"></i></a>
                             <a href="https://www.instagram.com/ismail_nouari_" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -172,23 +195,27 @@
                         </div>
 
                         <p class="warning">
-                            ⚠️ Be careful! The database  <i class="fas fa-database"></i>  is live , and anything you upload can be seen by other users. Think before sharing your pictures and content!
+                            <i class="fa-solid fa-triangle-exclamation" style="color: #ffc107; font-size: 30px;"></i>
+ Be careful! The database <i class="fas fa-database"></i> is live, and anything you upload can be seen by other users. Think before sharing your pictures and content!
                         </p>
                         <p>We value your privacy and security, so make sure to be mindful of the information you share.</p>
 
                         <button class="close-btn"><i class="fas fa-handshake"></i></button>
                     </div>
                 </div>
-            ` , 'success' , 50000)
-         
-            setTimeout(()=>{
-                   window.location.href = "/html/login.html"
-            }, 52000)
-            document.querySelector('.close-btn').addEventListener('click', function() {
-                window.location.href = "/html/login.html"
-            } )    
+            `, 'success', 50000);
+
+            setTimeout(() => {
+                window.location.href = "/html/login.html";
+            }, 52000);
+
+            document.querySelector('.close-btn').addEventListener('click', function () {
+                window.location.href = "/html/login.html";
+            });
         }
     </script>
-    <script src="html/main.js"></script>
+
+    <script src="main.js"></script>
 </body>
+
 </html>
