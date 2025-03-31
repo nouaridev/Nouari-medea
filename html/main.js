@@ -244,14 +244,13 @@
                         setTimeout(()=>{
                             setToken(data.token);
                             setUserData(data.user);
-    
+                            alert('done! you joined the community <br><i class="fa-regular fa-address-card"></i>' , 'success');
                             if(isLogedIn()){
                                 localStorage.setItem('logeinnow' , true)
                                 goToHome()  
                             }
                         },2300)
     
-                        alert('done! you joined the community <br><i class="fa-regular fa-address-card"></i>' , 'success');
                     }
                 } catch (error) {
                     alert('contact ismail nouari for help' , 'warning')
