@@ -23,10 +23,76 @@
 <body class="localuser-body">
 
     
+   <!-- modals  -->
+        <!-- delete post modal  -->
+            <div class="modal fade" id="delete-post-modal" tabindex="-1">
+                <div class="modal-dialog  modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h1 class="modal-title">delete Post</h1>
+
+                    </div>
+                    <div class="modal-body">
+                    <p style="font-size: 20px;">This post will vanish into the void... forever! 💀⚰️</p>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button " class="btn btn-secondary cancel" data-bs-dismiss="modal">😅 Oops, cancel</button>
+                    <button type="button " class="btn btn-primary delete">💀 Yup, RIP post!</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+         <!-- delete post modal -->
+
+         <!-- Edit Post Modal -->
+            <div class="modal fade" id="editPostModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title">✏️ Edit Post</h5>
+
+                    </div>
+                      
+                    <div class="modal-body">
+                    <form id="editPostForm">
+                        <!-- Title Input -->
+                        <div class="mb-3">
+                        <label for="postTitle" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="postTitle" placeholder="Enter new title" >
+                        </div>
+            
+                        <!-- Body Textarea -->
+                        <div class="mb-3">
+                        <label for="postBody" class="form-label">Body</label>
+                        <textarea class="form-control" id="postBody" rows="4" placeholder="Edit your content" ></textarea>
+                        </div>
+            
+                        <!-- Image Upload -->
+                        <div class="mb-3">
+                        <label for="postImage" class="form-label">Upload New Image</label>
+                        <input type="file" class="form-control" id="postImage">
+                        </div>
+            
+                        <!-- Preview Image -->
+                        <div class="mb-3 text-center">
+                        <img id="previewImage" src="" alt="Current Image" class="img-fluid rounded shadow" style="max-height: 200px; display: none; margin: auto ;">
+                        </div>
+                    </form>
+                    </div>
+            
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary " id="cancel" data-bs-dismiss="modal">❌ Cancel</button>
+                    <button type="submit" class="btn btn-primary "  id="saveChanges">💾 Save Changes</button>
+                    </div>
+                </div>
+                </div>
+            </div>  
+         <!-- edit post modal -->
 
 
 
-  
+
+
 
     <!-- allert section -->
     <div id="alerts"></div>

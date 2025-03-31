@@ -25,6 +25,11 @@
         //fonction to go to the home page
             let goLogin=()=>{window.location.href = '/html/login.html'}
 
+        //go user with id : 
+            let goProfile= (id)=>{
+                window.location.href =`/html/userProfile.html?id=${id}`;
+            }
+
         //function to add an alert : 
             
             let alerts = document.getElementById('alerts')
@@ -130,6 +135,7 @@
                         }
                         return response.data ; 
                     }catch(e){
+                        
                         console.log(e)
                     }
                 }
@@ -141,10 +147,9 @@
                         try {
 
                             let data = await login() ;
-
+                            setToken(data.token);
+                            setUserData(data.user);
                             setTimeout(()=>{
-                                setToken(data.token);
-                                setUserData(data.user);
                                 if(isLogedIn()){
                                     localStorage.setItem('logeinnow' , true)
                                     goToHome()
@@ -155,7 +160,7 @@
                            
 
                         } catch (error) {
-                            alert('something wrong' , 'warning');
+                            alert('enter valid data or register' , 'warning');
                         }
                 })
             
@@ -210,7 +215,12 @@
                            'Content-Type': 'multipart/form-data' ,
                         }
                     });
-                    return response.data ; 
+                    if(response.status >= 200 && response.status <= 299){
+                        return response.data ; 
+                    }else{
+                        return false;
+                    }
+                    
                 }catch(e){
                     
                    alert(`${e.response.data.message}` , 'danger')
@@ -230,17 +240,19 @@
                 e.preventDefault(); 
                 try {
                     let data = await signUp() ;
-                    setTimeout(()=>{
-                        setToken(data.token);
-                        setUserData(data.user);
-
-                        if(isLogedIn()){
-                            localStorage.setItem('logeinnow' , true)
-                            goToHome()  
-                        }
-                    },2300)
-
-                    alert('done! you joined the community <br><i class="fa-regular fa-address-card"></i>' , 'success');
+                    if(data){
+                        setTimeout(()=>{
+                            setToken(data.token);
+                            setUserData(data.user);
+    
+                            if(isLogedIn()){
+                                localStorage.setItem('logeinnow' , true)
+                                goToHome()  
+                            }
+                        },2300)
+    
+                        alert('done! you joined the community <br><i class="fa-regular fa-address-card"></i>' , 'success');
+                    }
                 } catch (error) {
                     alert('contact ismail nouari for help' , 'warning')
                 }
@@ -265,6 +277,11 @@
             localStorage.setItem('page' , 1); 
 
 
+            //visit profile btn 
+                let pfpbtn  = document.querySelector('.sidebar .visit-profile')
+                pfpbtn.addEventListener('click' , ()=>{
+                    goProfile(getUserData().id) ; 
+                })
 
 
 
@@ -278,7 +295,10 @@
             
             //removing the set of routing attributes : 
             localStorage.removeItem('openedPost');// this attribute removed the id of the previews post that opened 
-          
+  
+
+
+
             //fill user info function 
                 let fillInfo =async ()=>{
                     let info1 = getUserData() ; 
@@ -304,13 +324,7 @@
                     `
                     profileCard.prepend(user) ;
 
-                    let tags = document.querySelector('.right-sidebar ul') ;
-                    let url = 'https://tarmeezacademy.com/api/v1/tags';
-                    axios.get(url).then((e)=>{
-                        e.data.data.forEach(tag=> {
-                            tags.innerHTML+= `<li><i class="fa-solid fa-hashtag"></i> ${tag.name}</li>`
-                        });
-                    })
+                   
 
                     //fill post stats : 
                     let totalPosts = document.querySelector('.sidebar .stats-section .stat-item-posts .stat-number');
@@ -324,6 +338,9 @@
                 }
 
 
+    
+                        
+
 
             //variable for debounce the fetching (باش ميصراوش طلبات فنفس الوقت)
  
@@ -333,7 +350,7 @@
 
                         //  getPosts async
                         const getPosts = async (page) => {
-                            let url = `https://tarmeezacademy.com/api/v1/posts?limit=6&page=${page}`;
+                            let  url = `https://tarmeezacademy.com/api/v1/posts?limit=6&page=${page}`;
 
                             if (localStorage.getItem('isfetching') === 'false') {
                                 localStorage.setItem('isfetching', true);
@@ -346,13 +363,14 @@
                                         localStorage.setItem('totalPosts' , res.data.meta.total) ; 
                                     }
 
-                                    return res.data.data; // ✅ Correctly return posts
+                                    return res.data.data; 
                                 } catch (error) {
                                     console.error("Error fetching posts:", error);
                                     localStorage.setItem('isfetching', false);
-                                    return []; // ✅ Return empty array if error occurs
+                                    return []; 
                                 }
                             }
+                        
                         };
 
                         // Setup IntersectionObserver for Infinite Scroll
@@ -377,14 +395,13 @@
 
                             posts.forEach((post , index) => {
                                 if (typeof post.image !== "object") {
-                                    let tags = post.tags.map(tag => `<li>${tag.name}</li>`).join("");
-
+                                    
                                     const postElement = document.createElement("div");
                                     postElement.classList.add("post");
                                     postElement.id = `p${post.id}`;
                                     postElement.innerHTML = `
-                                        <div class="post-header">
-                                            <img src="${post.author.profile_image}" alt="User" class="post-user-pic">
+                                        <div class="post-header" onclick=goProfile(${post.author.id})>
+                                            <img src="${post.author.profile_image}" alt="User"  class="post-user-pic">
                                             <div class="post-user-info">
                                                 <h4>${post.author.name}</h4>
                                                 <p class="post-time"><i class="fa-solid fa-user-clock"></i> ${post.created_at}</p>
@@ -395,7 +412,7 @@
                                             <h3>${post.title}</h3>
                                             <p>${post.body}</p>
                                         </div>
-                                        <ul class="post-tags">${tags}</ul>
+                                      
                                         <div class="post-actions">
                                             <button class="comment-btn" data-id="${post.id}"> 
                                                 <i class="fa-solid fa-comment-nodes"></i> ${post.comments_count}
@@ -403,6 +420,22 @@
                                             <button class="share-btn"><i class="fa-solid fa-share"></i></button>
                                         </div>
                                     `;
+
+
+                                    //add event listener to post comment button : 
+                                    postElement.querySelector(".comment-btn").addEventListener('click', (e)=>{
+                                        let postId = e.target.closest(".comment-btn").getAttribute('data-id');
+                                        if (postId) {
+                                            window.location.href = `/html/post.html?id=${postId}`;
+                                        }
+                                    })
+
+                                     //share button 
+                                    postElement.querySelector('.share-btn').addEventListener('click' , ()=>{
+                                        navigator.clipboard.writeText(`${window.location.origin}/html/post.html?id=${post.id}`) ; 
+                                        alert("✅ Post link copied successfully!" , 'success') ;
+                                    })
+
 
                                     // hidden for animation
                                     postElement.style.opacity = "0";
@@ -420,24 +453,19 @@
                                 }
                             });
 
-                            //  Add click event for comments
-                            document.querySelectorAll(".post .comment-btn").forEach(btn => {
-                                btn.addEventListener('click', (e) => {
-                                    let postId = e.target.closest(".comment-btn").getAttribute('data-id');
-                                    if (postId) {
-                                        window.location.href = `/html/post.html?id=${postId}`;
-                                    }
-                                });
-                            });
+
 
                             // Increase page number for next request
-                            localStorage.setItem('page', parseInt(localStorage.getItem('page')) + 1);
-
+                         
+                                localStorage.setItem('page', parseInt(localStorage.getItem('page')) + 1);
+                          
                             //  Observe the infinite scroll trigger
                             setTimeout(()=>{
                                 lazyLoad.unobserve(document.querySelector('.infinite-scroll'));
                                 lazyLoad.observe(document.querySelector('.infinite-scroll'));
                             }, 1000)
+
+
                         };
 
                             
@@ -625,10 +653,10 @@
                     post.comments.forEach((cm)=>{
                         commentsCard.innerHTML += `
                             <!-- comment -->
-                            <div class="comment">
-                                <img src="${cm.author.profile_image}" alt="">
+                            <div class="comment" >
+                                <img src="${cm.author.profile_image}" alt="" onclick=goProfile(${cm.author.id})>
                                 <div class="info">
-                                    <h4>${cm.author.name}</h4>
+                                    <h4 onclick=goProfile(${cm.author.id})>${cm.author.name}</h4>
                                     <p>${cm.body}</p>
                                 </div>
                             </div>
@@ -640,7 +668,7 @@
             let fillInfo = (post , id)=>{
                 let postCard = document.querySelector('.post-body .post-container') ;
                 postCard.innerHTML = `
-                    <div class="author ">
+                    <div class="author " onclick=goProfile(${post.author.id})>
                         <img src='${post.author.profile_image}' alt="User" class="post-user-pic">
                         <div class="post-user-info">
                             <h4>${post.author.name}</h4>
@@ -681,8 +709,7 @@
         }else{
             const params = new URLSearchParams(window.location.search);
             const id = params.get("id"); // Get the value of "id"
-            console.log(id);
-
+           
 
             //get post info 
             getPost(id) ;
@@ -719,19 +746,43 @@
         let inf = document.querySelector('.infinite-scroll');
         inf.style.minHeight = '60vh' ; 
         inf.style.alignItems = 'center';
-             
+           
+        
+        //delete post : 
+        let deletePost  = async (id)=>{
+            let url =`https://tarmeezacademy.com/api/v1/posts/${id}`;
+            console.log('trying')
+            try{
+                let del = await axios.delete(url) ; 
+                if(del.status >=200 && del.status <= 299){
+                       return true; 
+                }else{
+                     return false ; 
+                }
+            }catch(e){
+                    return false;
+            }
+        }
         //get user info
         let getUser = async(id)=> {
             let url = `https://tarmeezacademy.com/api/v1/users/${id}` ; 
-            let user = await axios.get(url) ; 
-            return user.data.data
+            try{
+                let user = await axios.get(url) ; 
+                alert(`welcome to ${user.data.data.name} profile ..<i class="fas fa-thumbs-up"></i>` , 'success' ) ; 
+                 return user.data.data ;
+            }catch(e){
+                console.log("maybe the user does'nt exist"  ,e)
+                alert(`<i class="fa-solid fa-circle-exclamation"></i>Maybe the user does'nt exist (contact me and tell about the problem) <br> we will redirect you to the home page home page` , 'warning' , 10000); 
+                setTimeout(()=>{goToHome()} , 11000)
+            }
+
         }
 
         //get user posts : 
         let getPosts = async(id)=>{
             let url  = `https://tarmeezacademy.com/api/v1/users/${id}/posts`;
             let posts = await axios.get(url) ;
-            console.log(posts) ;
+          
             posts = posts.data.data  ;
             
             return posts ; 
@@ -739,18 +790,17 @@
         
 
         //fill posts : 
-        let fillPosts =async ()=>{
-            const id = getUserData().id ;
+        let fillPosts =async (id)=>{
             let posts = await getPosts(id) ;  
            
             let postbox = document.querySelector('.main-content .posts') ; 
 
-            if (posts){
-                posts.forEach((post ,index)=>{
-                    let postt = document.createElement('div'); 
-                    postt.classList.add('post') ; 
-                    postt.innerHTML = `
-                          <div class="post-header">
+            //if the is the local user he will get the right to edit posts 
+            if(id == getUserData().id){
+                var postTepmlate = (post)=>{
+                    let encodedPost= encodeURIComponent(JSON.stringify(post)) ;
+                    return `
+                                       <div class="post-header">
                                             <img src="${post.author.profile_image}" alt="User" class="post-user-pic">
                                             <div class="post-user-info">
                                                 <h4>${post.author.name}</h4>
@@ -762,24 +812,84 @@
                                             <h3>${post.title}</h3>
                                             <p>${post.body}</p>
                                         </div>
-                                        <div class="post-actions">
-                                            <button class="comment-btn" data-id="${post.id}">  <i class="fa-solid fa-comment-nodes"></i> ${post.comments_count} </button>
-                                            <button class="share-btn"><i class="fas fa-pen"></i></button>
-                                            <button class="share-btn"><i class="fa-solid fa-share"></i></button>
-                                            <button class="share-btn"><i <i class="fa-solid fa-share"></i>class="fa-solid fa-share"></i></button>
+                                        <div class="post-actions local-user-post-actions">
+                                            <div> 
+                                                 <button class="comment-btn" data-id="${post.id}">  <i class="fa-solid fa-comment-nodes"></i> ${post.comments_count} </button>
+                                                <button class="share-btn"> <i class="fa-solid fa-share"></i></button>
+                                            </div>
+                                             <div class='private-post-edit'> 
+                                                <button class="edit-btn" data-bs-toggle="modal" data-bs-target="#editPostModal" onclick=editPost('${encodedPost}')> <i class="fa-solid fa-pencil"></i></button>
+                                                <button class="del-btn" data-bs-toggle="modal" data-bs-target="#delete-post-modal"> <i class="fa-solid fa-trash-can"></i></button>
+                                            </div>
                                         </div>
-                    `
+                `
+                    
+                }
+            }else{
+                var postTepmlate = (post)=>{
+                    let encodedPost= encodeURIComponent(JSON.stringify(post)) ;
+                    return `
+                                       <div class="post-header">
+                                            <img src="${post.author.profile_image}" alt="User" class="post-user-pic">
+                                            <div class="post-user-info">
+                                                <h4>${post.author.name}</h4>
+                                                <p class="post-time"><i class="fa-solid fa-user-clock"></i> ${post.created_at}</p>
+                                            </div>
+                                        </div>
+                                        <img src="${post.image}" alt="Post Image" class="post-image">
+                                        <div class="post-content">
+                                            <h3>${post.title}</h3>
+                                            <p>${post.body}</p>
+                                        </div>
+                                        <div class="post-actions local-user-post-actions">
+                                                 <button class="comment-btn" data-id="${post.id}">  <i class="fa-solid fa-comment-nodes"></i> ${post.comments_count} </button>
+                                                <button class="share-btn"> <i class="fa-solid fa-share"></i></button>
+                                        </div>
+                `
+                    
+                }
+            }
+
+            //render posts
+            if (posts){
+                posts.forEach((post ,index)=>{
+                    let postt = document.createElement('div'); 
+                    postt.classList.add('post') ; 
+                    postt.innerHTML = `${postTepmlate(post)}` ; 
 
                     postt.style.opacity = 0 ; 
                     postt.style.transform = 'translateY(10px)';
                     postt.style.transition = "opacity 0.5s ease, transform 0.5s ease";
 
+                    //comment button 
                     postt.querySelector('.comment-btn').addEventListener('click', (e) => {
                         let postId = e.target.closest(".comment-btn").getAttribute('data-id');
                         if (postId) {
-                            window.location.href = `/html/post.html?id=${postId}`;
+                            window.location.href = `/html/post.html?id=${post.id}`;
                         }
                     });
+                    
+
+                    //handling buttons tha appears for local user :
+                    if(postt.querySelector('.del-btn')&&postt.querySelector('.edit-btn')){
+                        postt.querySelector('.del-btn').addEventListener('click' ,()=>{
+                            localStorage.setItem('post-delete' , post.id) ; 
+                        })
+    
+                        postt.querySelector('.edit-btn').addEventListener('click' ,()=>{
+                            localStorage.setItem('post-edit' , post.id) ; 
+                        })
+                    }
+
+                    //share button 
+                    postt.querySelector('.share-btn').addEventListener('click' , ()=>{
+                        navigator.clipboard.writeText(`${window.location.origin}/html/post.html?id=${post.id}`) ; 
+                        alert("✅ Post link copied successfully!" , 'success') ;
+                    })
+
+
+                
+
                     setTimeout(()=>{
                         postbox.append(postt) ;
                         setTimeout(() => {
@@ -788,13 +898,15 @@
                             
                         },500);
                     }, 1000*index)
-                     
+                    
     
                 })
 
             
                 //hide the loader
                 inf.style.display = 'none';
+
+                
             }
 
             
@@ -806,10 +918,6 @@
         let fillUserInfo = async(id)=>{
             let user = await getUser(id) ; 
             if(!user){
-                alert('user doesnt exist' , 'warning') ; 
-                setTimeout(()=>{
-                    goToHome() ; 
-                },2100)
             }else{
                 let userInfo = document.querySelector('.user-info') ; 
                 let statsSection = document.querySelector('.stats-section') ; 
@@ -882,17 +990,127 @@
                 goLogin();
             } , 2100)
         }else{
-            const id = getUserData().id ;
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get("id");
             //get user info 
             fillUserInfo(id) ; 
 
             //get user posts and fill 
-            fillPosts()
+            fillPosts(id)
 
-             
+
+            //modals functions 
+                    //delete modal: 
+
+                        var delModal = new bootstrap.Modal(document.querySelector('#delete-post-modal'))
+                        
+                        let cancelDel = document.querySelector('#delete-post-modal .modal-content .modal-footer .cancel') ; 
+                        if(cancelDel){
+                            cancelDel.addEventListener('click' , ()=>{localStorage.removeItem('post-delete');delModal.hide()})
+                        }
+
+                        let deleteDel = document.querySelector('#delete-post-modal .modal-content .modal-footer .delete') ; 
+                        if(deleteDel){
+                            deleteDel.addEventListener('click' , async()=>{
+                              let res = await  deletePost(parseInt(localStorage.getItem('post-delete'))) ;
+                              if(res){
+                                alert("RIP POST 💀⚰️" , 'success')
+                              }else{
+                                alert('error , contact developer to solve' , 'danger')
+                              }
+                                delModal.hide() ; 
+                                setTimeout(()=>{
+                                    localStorage.removeItem('post-delete');
+                                    window.location.reload();
+                                },2100)
+                            })
+                        }
+
+                    
+                    //edit modal:
+                    
+                    let editModal = new bootstrap.Modal(document.querySelector('#editPostModal'))  ; 
+                    
+                    //inputs : 
+                             let postTitile = document.querySelector('#editPostModal #postTitle') ; 
+                             let postBody = document.querySelector('#editPostModal #postBody');
+                             let postImage = document.querySelector("#editPostModal #postImage") ;
+                             let prevImage = document.querySelector("#previewImage") ;
+                            
+                     postTitile.addEventListener('change' , ()=>{
+                        console.log(this.value)
+                     })
+
+                    //controls
+                             let cancelBtn = document.querySelector('#editPostModal #cancel') ;
+                             let editBtn = document.querySelector('#editPostModal #saveChanges') ;
+                       
+                    //cancel : 
+                        cancelBtn.addEventListener('click', ()=>{
+                                editModal.hide() ;
+                        })
+
+                        editBtn.addEventListener('click' ,()=>{
+                          
+                            console.log(postTitile.value , postBody.value)
+
+
+                            let data = new FormData() ; 
+                            data.append('title' , postTitile.value) ; 
+                            data.append('body' , postBody.value) ; 
+                            data.append('image' , postImage.files[0]);
+                            data.append('_method' , 'put')
+                             
+                            let url = `https://tarmeezacademy.com/api/v1/posts/${editBtn.getAttribute('data')}` ; 
+                            axios.post(url , data).then((e)=>{
+                                console.log(e)
+                                if(e.status >= 200 && e.status <=299 ){
+                                    
+                                    alert("Post updated successfully!" , 'success');
+                                    setTimeout(()=>{
+                                        window.location.reload() ;
+                                    },2100)
+                                    
+                                }
+                            }).catch((e)=>{
+                                console.log(e)
+                                alert('❌ Error: Something went wrong! Please contact developer' , 'warning')
+                            })
+                            editModal.hide() ;
+
+                        })
+
+                          
+                            
+                       
+                        var editPost = (poststring)=>{
+                            let post = JSON.parse(decodeURIComponent(poststring)) ; 
+                   
+                            //inner old valuse : 
+                                postTitile.value = post.title ; 
+                                postBody.value = post.body ;
+                                console.log(postTitile.value , postBody.value)
+                            //fucntion when the pic is changed  : 
+                                postImage.addEventListener('change', (e)=>{
+                                    let img = postImage.files[0]; 
+                                    //file reader 
+                                    let reader = new FileReader() ;
+                                    reader.onload = (e)=>{
+                                        prevImage.src = e.target.result ; 
+                                        prevImage.style.display = 'block' ; 
+                                    }
+
+                                    //charging the file reader with the image
+                                    reader.readAsDataURL(img)
+                                    
+                                })
+                          
+                                editBtn.setAttribute('data' , post.id )
+    
+                        }
+
+                        
         }
-
-
 
 
 }
