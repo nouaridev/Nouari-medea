@@ -27,7 +27,7 @@
 
     //go user with id : 
         let goProfile= (id)=>{
-            window.location.href =`userProfile.html?id=${id}`;
+            window.location.href =`userprofile.html?id=${id}`;
         }
 
     //function to add an alert : 
@@ -185,19 +185,19 @@
 
 
 
-    //first lets check login 
+    // lets check login 
         if(isLogedIn()){
             loggedInNow = true ;
             goToHome();
         }
 
     
-    //the singup function 
+    // singup function 
         
          let signUp= async ()=>{
             console.log('rundignupfunction') ;
             let url = "https://tarmeezacademy.com/api/v1/register";
-             //and now lets get form data and submit btn: 
+             //lets get form data and submit btn: 
              let userName = document.getElementById('userName').value;
              let fullName = document.getElementById('fullName').value;
              let Password = document.getElementById('password').value;
