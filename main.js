@@ -4,7 +4,7 @@
 
    
     // Function to check if the user is logged in
-    let isLogedIn = () => {
+    let isLoggedIn = () => {
         return localStorage.getItem('token') ? true : false;
     };
  
@@ -101,52 +101,59 @@ if (window.location.href.includes('/login.html')) {
 
 
     // Check if the user is already logged in
-    if (isLogedIn()) {
+    if (isLoggedIn()) {
         goToHome();
     }
 
     // Login function
     let login = async () => {
         let url = 'https://tarmeezacademy.com/api/v1/login';
-        let userName = document.getElementById('userName').value;
-        let password = document.getElementById('password').value;
+        let userName = document.getElementById('userName')?.value.trim();
+        let password = document.getElementById('password')?.value.trim();
 
         let body = { username: userName, password: password };
 
         try {
             showLoader();
-            let response = await axios.post(url, body);
+            const response = await axios.post(url, body);
+            hideLoader(); 
             if (response.status >= 200 && response.status <= 299) {
-                hideLoader();
                 alert('<i class="fa-solid fa-square-check"></i> Done!', 'success');
+                return response.data;
             }
-            return response.data;
+            
         } catch (e) {
-            hideLoader
+            hideLoader();
             console.log(e);
+            return null; 
         }
     };
 
     // Login event listener
     let submitBtn = document.getElementById('login-btn');
-    submitBtn.addEventListener('click', async (e) => {
-        e.preventDefault();
-        try {
-            let data = await login();
-            setToken(data.token);
-            setUserData(data.user);
-
-            setTimeout(() => {
-                if (isLogedIn()) {
-                    localStorage.setItem('logeinnow', true);
-                    goToHome();
+    if(submitBtn){
+         submitBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+                let data = await login();
+                if(data){
+                    setToken(data.token);
+                    setUserData(data.user);
+    
+                    setTimeout(() => {
+                        if (isLoggedIn()) {
+                            localStorage.setItem('logeinnow', true);
+                            goToHome();
+                        }
+                    }, 2300);
                 }
-            }, 2300);
-        } catch (error) {
-            alert(`<i class="fa-solid fa-triangle-exclamation" style="color: #ffc107; font-size: 30px;"></i>
-Enter valid data or register`, 'warning');
-        }
-    });
+            } catch (error) {
+                alert(`<i class="fa-solid fa-triangle-exclamation" style="color: #ffc107; font-size: 30px;"></i>
+                        Enter valid data or register`, 'warning');
+            }
+         });
+    }
+   
 
 
 
@@ -156,7 +163,7 @@ Enter valid data or register`, 'warning');
 
 
     // Check login status
-    if (isLogedIn()) {
+    if (isLoggedIn()) {
         loggedInNow = true;
         goToHome();
     }
@@ -214,7 +221,7 @@ Enter valid data or register`, 'warning');
                 alert(`<i class="fa-solid fa-circle-check"></i> Done! You joined the community`, 'success');
 
                 setTimeout(() => {
-                    if (isLogedIn()) {
+                    if (isLoggedIn()) {
                         localStorage.setItem('logedinnow', true);
                         goToHome();
                     }
@@ -412,7 +419,7 @@ Enter valid data or register`, 'warning');
     };
 
     // Check login status
-    if (!isLogedIn()) {
+    if (!isLoggedIn()) {
         alert('Try to login!', 'danger');
         setTimeout(() => {
             goLogin();
@@ -524,7 +531,7 @@ Enter valid data or register`, 'warning');
     }
 
     // Check if user is logged in
-    if (!isLogedIn()) {
+    if (!isLoggedIn()) {
         alert('try to login bro', 'danger');
         setTimeout(() => {
             goLogin();
@@ -747,7 +754,7 @@ Enter valid data or register`, 'warning');
         }
 
         // Check if user is logged in
-        if (!isLogedIn()) {
+        if (!isLoggedIn()) {
             alert('Try to login bro', 'danger');
             setTimeout(() => {
                 goLogin();
