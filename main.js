@@ -170,7 +170,6 @@ if (window.location.href.includes('/login.html')) {
 
     // Signup function
     let signUp = async () => {
-        console.log('Running signup function');
 
         let url = "https://tarmeezacademy.com/api/v1/register";
 
@@ -199,12 +198,14 @@ if (window.location.href.includes('/login.html')) {
             if (response.status >= 200 && response.status <= 299) {
                 return response.data;
             } else {
-                return false;
+                return null;
             }
 
         } catch (e) {
             hideLoader();
-            alert(`<i class="fa-solid fa-triangle-exclamation" style="color: #ffc107; font-size: 30px;"></i>${e.response.data.message}`, 'danger');
+            let errorMessage = e.response?.data?.message ; 
+            alert(`<i class="fa-solid fa-triangle-exclamation" style="color: #ffc107; font-size: 30px;"></i>${errorMessage}`, 'danger');
+            return null; 
         }
     };
 
